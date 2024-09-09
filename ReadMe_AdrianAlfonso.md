@@ -15,3 +15,9 @@
     2 On the console run python app.py
     3 Once run the command phython app.py. the console will show a list of http addreses that can be used to launch the web application. 
       You can press control and click on the address suggested on the console. That will launch the web application in a browser.
+
+# Project specific files and folders
+    * app.py - This files initializes the flask web framework and registers all the possible routes that can be accessed in this web app.
+    * directory 'templates' - In this directory you will find all the html templates that will be rendered. Each template contains the html/ css/javascript code plus a special flask language called Jinja.Jinja template is responsible for making the content in the page 'dynamic'
+    * directory/base.html - This file is the base template for all pages. It contains the commonly used html across the site.
+
