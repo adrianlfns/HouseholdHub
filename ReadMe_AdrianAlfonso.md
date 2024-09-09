@@ -19,5 +19,6 @@
 # Project specific files and folders
     * app.py - This files initializes the flask web framework and registers all the possible routes that can be accessed in this web app.
     * directory 'templates' - In this directory you will find all the html templates that will be rendered. Each template contains the html/ css/javascript code plus a special flask language called Jinja.Jinja template is responsible for making the content in the page 'dynamic'
-    * directory/base.html - This file is the base template for all pages. It contains the commonly used html across the site.
+    * templates/base.html - This file is the base template for all pages. It contains the commonly used html across the site.
+    * directory 'static' - In this directory you will find all the files that can be served statically, css, images, etc. 
 

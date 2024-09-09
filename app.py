@@ -4,7 +4,7 @@ See minimal flask application https://flask.palletsprojects.com/en/3.0.x/quickst
 
 from flask import Flask, render_template
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='/static')
 
 #initial route (home page)
 @app.route("/")
