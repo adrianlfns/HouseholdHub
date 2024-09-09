@@ -1,5 +1,5 @@
 '''
-See minimal flask application https://flask.palletsprojects.com/en/3.0.x/quickstart/#a-minimal-application
+For flask documentation see https://flask.palletsprojects.com/en/3.0.x/
 '''
 
 import flask 
@@ -23,6 +23,6 @@ def mydevices():
 
 #this line runs and initialize flask
 if __name__ == "__main__":
-    app.run('0.0.0.0', debug=True) 
+    app.run(host='0.0.0.0', debug=True) 
 
 
