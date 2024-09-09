@@ -2,15 +2,23 @@
 See minimal flask application https://flask.palletsprojects.com/en/3.0.x/quickstart/#a-minimal-application
 '''
 
-from flask import Flask, render_template
+import flask 
 
-app = Flask(__name__, static_url_path='/static')
+app = flask.Flask(__name__, static_url_path='/static')
 
-#initial route (home page)
 @app.route("/")
 def home():
-    return render_template('home.html')
+    '''
+    Initial route to land on the home page
+    '''
+    return flask.render_template('home.html')
 
+@app.route("/mydevices")
+def mydevices():
+    '''
+    route for managing devices
+    '''
+    return flask.render_template('mydevices.html')
 
 
 #this line runs and initialize flask

@@ -8,13 +8,17 @@
     This project is a web application developed with Python and Flask
 
 # Python packages used
+    You can install all depedencies by runing the command: 'pip install -r requirements.txt'
+
+    Below is the ist of packages used
     flask    #pip install flask
+
+    
 
 # Instructions to use the program
     1 On the console make sure to point the directory to this project root foolder. 
     2 On the console run python app.py
-    3 Once run the command phython app.py. the console will show a list of http addreses that can be used to launch the web application. 
-      You can press control and click on the address suggested on the console. That will launch the web application in a browser.
+    3 Once you run the command, the console will show a list of http addreses that can be used to launch the web application. You can press control and click on the address suggested on the console. That will launch the web application in a browser.
 
 # Project specific files and folders
     * app.py - This files initializes the flask web framework and registers all the possible routes that can be accessed in this web app.
