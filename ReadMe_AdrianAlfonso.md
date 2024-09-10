@@ -12,7 +12,6 @@
 
     Below is the ist of packages used
     flask    #pip install flask
-
     
 
 # Instructions to use the program
@@ -25,4 +24,6 @@
     * directory 'templates' - In this directory you will find all the html templates that will be rendered. Each template contains the html/css/javascript code plus a special flask language called Jinja. Jinja language is responsible for making the content in the page 'dynamic'.
     * templates/base.html - This file is the base template for all pages. It contains the commonly used html across the site.
     * directory 'static' - In this directory you will find all the files that will be served statically, css, javascript, images, etc. 
+    * directory 'business_rules' - In this directory you will find all of the classes related to the business rules of the project.
+    * business_rules/device.py  - Is the class data and single functionality for a single device.
 

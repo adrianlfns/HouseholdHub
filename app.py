@@ -11,14 +11,14 @@ def home():
     '''
     Initial route to land on the home page
     '''
-    return flask.render_template('home.html')
+    return flask.render_template('home.html') #see templates directory for corresponding template
 
 @app.route("/mydevices")
 def mydevices():
     '''
     route for managing devices
     '''
-    return flask.render_template('mydevices.html')
+    return flask.render_template('mydevices.html') #see templates directory for corresponding template
 
 
 #this line runs and initialize flask
