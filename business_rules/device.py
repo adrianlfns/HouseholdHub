@@ -6,14 +6,15 @@ class Device:
     def __init__(self):
 
         #general information of the device
-        self.name = None
+        self.id =  None #internal id
+        self.name = ''
         self.category = None
-        self.make = None
-        self.model = None
+        self.make = ''
+        self.model = ''
 
         #purchase information of the device
-        self.purchase_price = None
-        self.purchase_store = None
+        self.purchase_price_dollars = 0.0
+        self.purchase_store = ''
         self.purchase_date = None
 
         #guaranty information of the device
