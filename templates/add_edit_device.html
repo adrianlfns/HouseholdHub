@@ -1,5 +1,65 @@
 {% extends "base.html" %}
 {% block title %}My Devices{% endblock %}
 {% block content %}
- add edit device
+
+<form method="post" action="\add_edit_device" > 
+
+    <div class="row">
+        <div class="col">
+            <label for="deviceName">Device name</label>
+            <input type="text" id="deviceName" name="deviceName" required  class="form-control" autocomplete="off" autofocus>
+        </div>       
+    </div>
+
+    <div class="row">
+        <div class="col-sm">
+            <label for="deviceMake">Make</label>
+            <input type="text" id="deviceMake" name="deviceMake" class="form-control" autocomplete="off">
+        </div>
+        <div class="col-sm">
+            <label for="deviceModel">Model</label>
+            <input type="text" id="deviceModel" name="deviceModel" class="form-control" autocomplete="off">
+        </div>        
+    </div>
+
+    <div class="row">
+        <div class="col-sm">
+            <label for="purchasePrice">Purchase Price</label>
+            <div class="input-group input-group-sm">
+                <div class="input-group-prepend">
+                    <div class="input-group-text">$</div>
+                  </div>
+                <input type="number" id="purchasePrice" name="purchase_price_dollars" class="form-control" autocomplete="off">
+            </div>            
+        </div>
+        <div class="col-sm">
+            <label for="purchaseStore">Purchase Store</label>
+            <input type="text" id="purchaseStore" name="purchase_store" class="form-control" autocomplete="off">
+        </div>
+        <div class="col-sm">
+            <label for="purchaseDate">Purchase Date</label>
+            <input type="date" id="purchaseDate" name="purchase_date" class="form-control" autocomplete="off">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm">
+            <label for="guarantyExpirationDate">Guaranty Expiration Date</label>
+            <input type="date" id="guarantyExpirationDate" name="guaranty_expiration_date" class="form-control" autocomplete="off">
+        </div>      
+    </div>
+    <div class="row">
+        <div class="col-xl">
+            <label for="guarantyNotes">Guaranty Notes</label>
+            <textarea id="guarantyNotes" name="guaranty_notes" class="form-control" autocomplete="off" rows="3"></textarea>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col d-flex flex-row-reverse">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>       
+    </div>
+</form>
+
+
 {% endblock %}
