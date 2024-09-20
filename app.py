@@ -37,22 +37,27 @@ def add_edit_device_post():
 
     #collect the post data in a dictionary
     post_data_collected = {
-    'deviceName': flask.request.form.get("deviceName"),      
-    'deviceMake': flask.request.form.get("deviceMake"),
-    'model':flask.request.form.get("deviceModel"),
+    'device_name': flask.request.form.get("device_name"),      
+    'device_make': flask.request.form.get("device_make"),
+    'device_model':flask.request.form.get("device_model"),
     'purchase_price_dollars':  flask.request.form.get("purchase_price_dollars"),
     'purchase_store': flask.request.form.get("purchase_store"),
     'purchase_date':flask.request.form.get("purchase_date"),
     'guaranty_expiration_date': flask.request.form.get("guaranty_expiration_date"),
     'guaranty_notes': flask.request.form.get("guaranty_notes")
-    }   
+    }  
+
+    is_valid, validation_error, invalid_input_name = Device_Manager.validate_device_dict(post_data_collected)
+
+    if not is_valid:
+        return flask.render_template('add_edit_device.html', data=post_data_collected, validation_error=validation_error, invalid_input_name=invalid_input_name)
    
 
     #create a device object
     device = Device()
-    device.name = post_data_collected["deviceName"]
-    device.make = post_data_collected["deviceMake"]
-    device.model = post_data_collected["model"]
+    device.name = post_data_collected["device_name"]
+    device.make = post_data_collected["device_make"]
+    device.model = post_data_collected["device_model"]
     device.purchase_price_dollars = post_data_collected["purchase_price_dollars"]
     device.purchase_store = post_data_collected["purchase_store"]
     device.purchase_date = post_data_collected["purchase_date"]

@@ -1,59 +1,75 @@
+
+{# 
+   Add edit device template
+#}
 {% extends "base.html" %}
+{% import "forms.html" as forms %}
 {% block title %}My Devices{% endblock %}
 {% block content %}
+
+
+{% set post_back_data = data if data else {}  %}
+
+
+{% if validation_error  %}
+<div class="p-3 text-danger border border-danger-subtle rounded-3">
+    {{validation_error}}
+</div>
+{% endif %}
 
 <form method="post" action="\add_edit_device" > 
 
     <div class="row">
         <div class="col">
-            <label for="deviceName">Device name</label>
-            <input type="text" id="deviceName" name="deviceName" required  class="form-control" autocomplete="off" autofocus>
+            <label for="device_name">Device name</label>
+            {{ forms.input(id='device_name',name='device_name',type='text', post_back_data=post_back_data, invalid_input_name=invalid_input_name, is_required=true) }}
+            <!-- <input type="text" id="deviceName" name="deviceName"  class="form-control {{'is-invalid' if invalid_input_name=='deviceName' else ''}}" autocomplete="off" value="{{ data['deviceName'] if data else '' }}">  -->
         </div>       
     </div>
 
     <div class="row">
         <div class="col-sm">
-            <label for="deviceMake">Make</label>
-            <input type="text" id="deviceMake" name="deviceMake" class="form-control" autocomplete="off">
-        </div>
+            <label for="device_make">Make</label>
+            {{ forms.input(id='device_make',name='device_make',type='text', post_back_data=post_back_data, invalid_input_name=invalid_input_name) }}
+           </div>
+     
         <div class="col-sm">
-            <label for="deviceModel">Model</label>
-            <input type="text" id="deviceModel" name="deviceModel" class="form-control" autocomplete="off">
-        </div>        
-    </div>
-
+            <label for="device_model">Model</label>
+            {{ forms.input(id='device_model',name='device_model',type='text', post_back_data=post_back_data, invalid_input_name=invalid_input_name) }}
+        </div> 
+    </div>  
     <div class="row">
         <div class="col-sm">
-            <label for="purchasePrice">Purchase Price</label>
+            <label for="purchase_price_dollars">Purchase Price</label>
             <div class="input-group input-group-sm">
                 <div class="input-group-prepend">
                     <div class="input-group-text">$</div>
                   </div>
-                <input type="number" id="purchasePrice" name="purchase_price_dollars" class="form-control" autocomplete="off">
+                {{ forms.input(id='purchase_price_dollars',name='purchase_price_dollars',type='number', post_back_data=post_back_data, invalid_input_name=invalid_input_name) }}
             </div>            
         </div>
         <div class="col-sm">
-            <label for="purchaseStore">Purchase Store</label>
-            <input type="text" id="purchaseStore" name="purchase_store" class="form-control" autocomplete="off">
+            <label for="purchase_store">Purchase Store</label>
+            {{ forms.input(id='purchase_store',name='purchase_store',type='text', post_back_data=post_back_data, invalid_input_name=invalid_input_name) }}
         </div>
         <div class="col-sm">
-            <label for="purchaseDate">Purchase Date</label>
-            <input type="date" id="purchaseDate" name="purchase_date" class="form-control" autocomplete="off">
+            <label for="purchase_date">Purchase Date</label>
+            {{ forms.input(id='purchase_date',name='purchase_date',type='date', post_back_data=post_back_data, invalid_input_name=invalid_input_name) }}
         </div>
     </div>
 
     <div class="row">
         <div class="col-sm">
-            <label for="guarantyExpirationDate">Guaranty Expiration Date</label>
-            <input type="date" id="guarantyExpirationDate" name="guaranty_expiration_date" class="form-control" autocomplete="off">
+            <label for="guaranty_expiration_date">Guaranty Expiration Date</label>
+            {{ forms.input(id='guaranty_expiration_date',name='guaranty_expiration_date',type='date', post_back_data=post_back_data, invalid_input_name=invalid_input_name) }}
         </div>      
     </div>
     <div class="row">
         <div class="col-xl">
-            <label for="guarantyNotes">Guaranty Notes</label>
-            <textarea id="guarantyNotes" name="guaranty_notes" class="form-control" autocomplete="off" rows="3"></textarea>
+            <label for="guaranty_notes">Guaranty Notes</label>
+            {{forms.texarea(id='guaranty_notes',name='guaranty_notes', post_back_data=post_back_data, invalid_input_name=invalid_input_name) }}
         </div>
-    </div>
+    </div> 
     <div class="row mt-2">
         <div class="col d-flex flex-row-reverse">
             <button type="submit" class="btn btn-primary">Submit</button>
