@@ -26,3 +26,16 @@ class Device:
         self.purchase_receipt_doc_ref = []
         self.guaranty_doc_ref = []
 
+    def LoadFromDictionary(self, dict):
+        '''
+        loads all the properties from a dictionary
+        '''
+        self.name = dict["device_name"]
+        self.make = dict["device_make"]
+        self.model = dict["device_model"]
+        self.purchase_price_dollars = dict["purchase_price_dollars"]
+        self.purchase_store = dict["purchase_store"]
+        self.purchase_date = dict["purchase_date"]
+        self.guaranty_expiration_date = dict["guaranty_expiration_date"]
+        self.guaranty_notes = dict["guaranty_notes"]
+

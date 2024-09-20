@@ -7,6 +7,7 @@ from business_rules.device_manager import Device_Manager #imports a package from
 from business_rules.device import Device
 
 app = flask.Flask(__name__, static_url_path='/static')
+app.secret_key = '192b9bdd22ab9ed4d12e236c78afcb9a393ec15f71bbf5dc987d54727823bcb1'
 
 @app.get("/")
 def home():
@@ -34,18 +35,8 @@ def add_edit_device_post():
     '''
     POST route for receiving device information
     '''
-
-    #collect the post data in a dictionary
-    post_data_collected = {
-    'device_name': flask.request.form.get("device_name"),      
-    'device_make': flask.request.form.get("device_make"),
-    'device_model':flask.request.form.get("device_model"),
-    'purchase_price_dollars':  flask.request.form.get("purchase_price_dollars"),
-    'purchase_store': flask.request.form.get("purchase_store"),
-    'purchase_date':flask.request.form.get("purchase_date"),
-    'guaranty_expiration_date': flask.request.form.get("guaranty_expiration_date"),
-    'guaranty_notes': flask.request.form.get("guaranty_notes")
-    }  
+    #collect the post data in a dictionary (uses dictionary comprenhension)
+    post_data_collected = {k:flask.request.form.get(k) for k in flask.request.form}  
 
     is_valid, validation_error, invalid_input_name = Device_Manager.validate_device_dict(post_data_collected)
 
@@ -55,16 +46,15 @@ def add_edit_device_post():
 
     #create a device object
     device = Device()
-    device.name = post_data_collected["device_name"]
-    device.make = post_data_collected["device_make"]
-    device.model = post_data_collected["device_model"]
-    device.purchase_price_dollars = post_data_collected["purchase_price_dollars"]
-    device.purchase_store = post_data_collected["purchase_store"]
-    device.purchase_date = post_data_collected["purchase_date"]
-    device.guaranty_expiration_date = post_data_collected["guaranty_expiration_date"]
-    device.guaranty_notes = post_data_collected["guaranty_notes"]
+    device.LoadFromDictionary(post_data_collected)
     
-    return flask.render_template('add_edit_device.html')
+    #add or edit the dictionary in the storage
+    Device_Manager.add_edit_device(device)
+
+    flask.flash('New device added.')
+    
+    #go back to my devices
+    return flask.redirect("/mydevices")
 
 
 #this line runs and initialize flask

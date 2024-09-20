@@ -2,6 +2,16 @@
 {% block title %}My Devices{% endblock %}
 {% block content %}
 
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}     
+        <div class="p-3 mb-2 text-danger border border-danger-subtle rounded-3">
+            {{ message }}
+        </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
  <a class="btn btn-primary" href="/add_edit_device">Add Device</a>
 
  <br>
