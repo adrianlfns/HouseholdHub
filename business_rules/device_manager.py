@@ -46,9 +46,17 @@ class Device_Manager:
         devices_json = json.dumps(devices_col, default=lambda o: o.__dict__)
         with open("db/devices.json", "w") as devices_file:
             devices_file.write(devices_json)
-        
 
-        
+    @staticmethod  
+    def delete_device_by_id(device_id):
+        devices_col = Device_Manager.get_all_devices() 
+        found_device = next((e for e in devices_col if e.id == device_id),None)
+        if found_device:
+            print(found_device)
+            devices_col.remove(found_device)
+            Device_Manager.store_device_col(devices_col)
+       
+           
     @staticmethod
     def get_all_devices():
         '''
@@ -59,7 +67,7 @@ class Device_Manager:
             devices_json = json.load(devices_file)  
             for p in devices_json:
                 device = Device()
-                device.LoadFromDictionary(p)
+                device.load_from_dictionary(p)
                 devices_col.append(device)      
         return devices_col
             
@@ -80,7 +88,7 @@ class Device_Manager:
             return  False, 'Device name is required', 'device_name'
         
         #check device name already exists
-        found_device = next((e for e in Device_Manager.get_all_devices() if e.device_name == device_name), default= None)
+        found_device = next((e for e in Device_Manager.get_all_devices() if e.device_name == device_name), None)
         if found_device:
             return  False, 'Device name already exists', 'device_name'
         

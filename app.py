@@ -31,6 +31,18 @@ def add_edit_device_get():
     '''
     return flask.render_template('add_edit_device.html')
 
+@app.post("/remove_device")
+def remove_device():
+    '''
+    POST route for removing a device
+    '''
+    device_id = flask.request.form.get("device_id",0)  
+    if device_id:       
+        device_id = int(device_id)
+        Device_Manager.delete_device_by_id(device_id)
+        return flask.redirect("/mydevices")
+    
+
 @app.post("/add_edit_device")
 def add_edit_device_post():
     '''
@@ -47,7 +59,7 @@ def add_edit_device_post():
 
     #create a device object
     device = Device()
-    device.LoadFromDictionary(post_data_collected)
+    device.load_from_dictionary(post_data_collected)
     
     #add or edit the dictionary in the storage
     Device_Manager.add_edit_device(device)

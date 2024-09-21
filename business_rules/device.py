@@ -26,7 +26,7 @@ class Device:
         self.purchase_receipt_doc_ref = []
         self.guaranty_doc_ref = []
 
-    def LoadFromDictionary(self, dict:dict):
+    def load_from_dictionary(self, dict:dict):
         '''
         loads all the properties from a dictionary
         '''
