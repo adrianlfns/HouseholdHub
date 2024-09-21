@@ -83,6 +83,14 @@ class Device_Manager:
         if (device_name is None or device_name == ""):
             return  False, 'Device name is required', 'device_name'
         
+        #check device name already exists
+        found_device = next((e for e in Device_Manager.get_all_devices() if e.device_name == device_name), None)
+        if found_device:
+            return  False, 'Device name already exists', 'device_name'
+        
+  
+   
+        
               
 
         
