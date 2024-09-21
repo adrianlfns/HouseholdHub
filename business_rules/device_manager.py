@@ -62,17 +62,13 @@ class Device_Manager:
                 device.LoadFromDictionary(p)
                 devices_col.append(device)      
         return devices_col
-    
-      
-       
-
-       
-        
+            
     
     @staticmethod
     def validate_device_dict(device_dict):
         '''
            Validates the information of a device dict.
+           Makes sure that device name is present. Device name must also be unique.
 
            Input: Receives a device dictionary
            Returns: a tuple with 3 values. ([Validation passed or not], [Validation message], [Name of the input that failed])
@@ -84,18 +80,9 @@ class Device_Manager:
             return  False, 'Device name is required', 'device_name'
         
         #check device name already exists
-        found_device = next((e for e in Device_Manager.get_all_devices() if e.device_name == device_name), None)
+        found_device = next((e for e in Device_Manager.get_all_devices() if e.device_name == device_name), default= None)
         if found_device:
             return  False, 'Device name already exists', 'device_name'
         
-  
-   
-        
-              
-
-        
         return True, '', ''
-
-
-
     
