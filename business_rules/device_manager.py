@@ -41,21 +41,34 @@ class Device_Manager:
     @staticmethod    
     def store_device_col(devices_col):
         '''
-          This acts as a database update
+          This acts as a database update.
+          Given a list of devices it will dump the list into the 'database', a file named devices.json
         ''' 
         devices_json = json.dumps(devices_col, default=lambda o: o.__dict__)
         with open("db/devices.json", "w") as devices_file:
             devices_file.write(devices_json)
 
     @staticmethod  
-    def delete_device_by_id(device_id):
+    def delete_device_by_id(device_id:int):
+        '''
+        This acts as a database delete.
+        Given a device id it will remove it from the 'database'
+        '''
         devices_col = Device_Manager.get_all_devices() 
         found_device = next((e for e in devices_col if e.id == device_id),None)
         if found_device:
-            print(found_device)
             devices_col.remove(found_device)
             Device_Manager.store_device_col(devices_col)
-       
+
+    @staticmethod
+    def get_device_by_id(device_id:int):
+        '''
+        Gets a device by id.
+        Returns: the device object if exists, otherwise it returns None
+        '''        
+        devices_col = Device_Manager.get_all_devices()
+        device = next((e for e in devices_col if e.id == device_id),None) 
+        return device    
            
     @staticmethod
     def get_all_devices():

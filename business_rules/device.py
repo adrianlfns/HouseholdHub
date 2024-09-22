@@ -26,6 +26,12 @@ class Device:
         self.purchase_receipt_doc_ref = []
         self.guaranty_doc_ref = []
 
+    def to_dictionary(self):
+        '''
+        returns a dictionary representation of this object.        
+        '''
+        return self.__dict__
+
     def load_from_dictionary(self, dict:dict):
         '''
         loads all the properties from a dictionary
