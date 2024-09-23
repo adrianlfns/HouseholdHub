@@ -39,11 +39,13 @@ def add_edit_device_get(device_id:int=None):
             device_id = int(device_id)
         except ValueError:
           raise Exception(f"Invalid post data. Expected parameter device_id to be int")
+        
         if device_id > 0:
             device = Device_Manager.get_device_by_id(device_id)
             if not device:
                 raise Exception(f"Device with ID {device_id} not found.")
             data = device.to_dictionary()
+
     return flask.render_template('add_edit_device.html',data=data)
 
 @app.post("/remove_device")
@@ -54,7 +56,8 @@ def remove_device():
     device_id = flask.request.form.get("device_id",0)  
 
     if not device_id:
-        raise Exception(f"Invalid post data. expected a parameter named device_id")    
+        raise Exception(f"Invalid post data. expected a parameter named device_id") 
+       
     try:
         device_id = int(device_id)
     except ValueError:
@@ -91,13 +94,17 @@ def add_edit_device_post():
 
     #create a device object
     device = Device()
-    device.load_from_dictionary(post_data_collected)
+    device.update_from_dictionary(post_data_collected)
     
     #add or edit the dictionary in the storage
-    Device_Manager.add_edit_device(device)
+    device, device_added = Device_Manager.add_edit_device(device)
     
-    #set a flash message for another request. In this case /mydevices will consume the flashed messages. 
-    flask.flash(f'New device added. The new device name is "{device.device_name}".')
+    #set a flash message for another request. In this case /mydevices will consume the flashed messages.
+    if device_added:
+        flask.flash(f'The new device was successfully added. The new device name is "{device.device_name}".')
+    else:
+        flask.flash(f'The device was successfully edited.')
+        
     
     #go back to my devices
     return flask.redirect("/mydevices")

@@ -32,11 +32,11 @@ class Device:
         '''
         return self.__dict__
 
-    def load_from_dictionary(self, dict:dict):
+    def update_from_dictionary(self, dict:dict):
         '''
-        loads all the properties from a dictionary
+        update all the properties from a dictionary
         '''
-        self.id = dict.get("id",0)
+        self.id = dict.get("id",0)    
         self.device_name = dict["device_name"]
         self.device_make = dict["device_make"]
         self.device_model = dict["device_model"]
@@ -45,6 +45,19 @@ class Device:
         self.purchase_date = dict["purchase_date"]
         self.guaranty_expiration_date = dict["guaranty_expiration_date"]
         self.guaranty_notes = dict["guaranty_notes"]
+
+    def update_from_device(self, dev):
+        '''
+        updates this property from another property of type device
+        '''
+        self.device_name = dev.device_name
+        self.device_make = dev.device_make
+        self.device_model = dev.device_model
+        self.purchase_price_dollars = dev.purchase_price_dollars
+        self.purchase_store = dev.purchase_store
+        self.purchase_date = dev.purchase_date
+        self.guaranty_expiration_date = dev.guaranty_expiration_date
+        self.guaranty_notes = dev.guaranty_notes
 
 
 

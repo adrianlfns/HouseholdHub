@@ -7,35 +7,61 @@ class Device_Manager:
     '''
 
     @staticmethod
+    def get_new_device_key(devices_col = None):
+        '''
+        Generates a new device ID.
+        '''
+        if not devices_col:
+            devices_col = Device_Manager.get_all_devices()
+        
+        max_device = None 
+        if len(devices_col) > 0:
+            max_device = max(devices_col, key=lambda x: x.id) 
+            if max_device:
+                next_id = max_device.id + 1                
+        else:
+            next_id = 1
+        return next_id  
+        
+
+    @staticmethod
     def add_edit_device(device:Device):
         '''
-          Adds/Edit a device 
+          Adds/Edit a device, it depends on the ID that was passed.
+          Parameter: device to be added or edited.
+
+          If the device passed has an 'empty' or zero or None id, perform an add.
+          IF the device passed has an id > 0, perform and edit.
+
+          Returns: a tuple with tow values: the device that was added/edited and a flag that indicates that the device was added.
         '''              
         devices_col =  Device_Manager.get_all_devices() 
         #innit de devices collection if needed  
         if not devices_col:
             devices_col = []  
+        
+        device_added = False         
 
-        if not device.id or device.id == '': 
-            #check that the device is new, then add it. 
-
-            #we need to determine the ID for this new device  
-
-            max_device = None 
-            if len(devices_col) > 0:
-                max_device = max(devices_col, key=lambda x: x.id) 
-            if max_device:
-                next_id = max_device.id + 1                
-            else:
-                next_id = 1 
-            device.id = next_id
+        #check that the device is new, then add it.
+        if not device.id or device.id == '' or device.id == 0:
+            #we need to determine the ID for this new device             
+            device.id = Device_Manager.get_new_device_key()
 
             #addd to the devices col
-            devices_col.append(device)            
+            devices_col.append(device)
+            device_added = True            
         else:
-            #if the device exists just update 
-            pass        
+            #if the device exists just update         
+            device_to_edit:Device = next((e for e in devices_col if str(e.id) == str(device.id)),None) 
+            if not device_to_edit:
+                raise Exception(f"Device with id {device.id} not found.")
+            device_to_edit.update_from_device(device)
+            device = device_to_edit
+
+        #stores the device
         Device_Manager.store_device_col(devices_col)
+
+        return device, device_added
     
 
     @staticmethod    
@@ -81,7 +107,7 @@ class Device_Manager:
             devices_json = json.load(devices_file)  
             for p in devices_json:
                 device = Device()
-                device.load_from_dictionary(p)
+                device.update_from_dictionary(p)
                 devices_col.append(device)      
         return devices_col
             

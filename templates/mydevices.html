@@ -12,6 +12,12 @@
   {% endif %}
 {% endwith %}
 
+{% if not devices_col %}
+  <div class="p-3 mb-2 text-info border border-info-subtle rounded-3">
+    There are no devices
+  </div>
+{% endif %}
+
 <div class="row mt-2 mb-2">
   <div class="col d-flex flex-row-reverse">
     <a class="btn btn-primary" href="/add_edit_device">Add Device</a>                      
