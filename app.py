@@ -29,7 +29,7 @@ def mydevices():
 @app.get("/add_edit_device/<device_id>")
 def add_edit_device_get(device_id:int=None):
     '''
-    entry route for adding/editing devices
+    Entry route for adding/editing devices
     Note: if device_id ==0 or device_id == NONE, it will be treated as insert.
           if device_id > 0 it will be treated as edit.
     '''
@@ -62,8 +62,16 @@ def remove_device():
     
     if device_id <=0:
         raise Exception(f"Invalid post data. Expected parameter device_id to be int > 0")
+    
+    device = Device_Manager.get_device_by_id(device_id)
 
-    Device_Manager.delete_device_by_id(device_id)
+    if not device:
+        raise Exception(f"Device with id {device_id} not found.") 
+    
+    device_name = device.device_name
+    Device_Manager.delete_device(device)
+
+    flask.flash(f'The device "{device_name}" was successfully deleted.')
     return flask.redirect("/mydevices")
     
 
@@ -89,7 +97,7 @@ def add_edit_device_post():
     Device_Manager.add_edit_device(device)
     
     #set a flash message for another request. In this case /mydevices will consume the flashed messages. 
-    flask.flash('New device added.')
+    flask.flash(f'New device added. The new device name is "{device.device_name}".')
     
     #go back to my devices
     return flask.redirect("/mydevices")

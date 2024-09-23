@@ -49,11 +49,12 @@ class Device_Manager:
             devices_file.write(devices_json)
 
     @staticmethod  
-    def delete_device_by_id(device_id:int):
+    def delete_device(device:Device):
         '''
         This acts as a database delete.
-        Given a device id it will remove it from the 'database'
+        Given a device it will remove it from the 'database'
         '''
+        device_id = device.id
         devices_col = Device_Manager.get_all_devices() 
         found_device = next((e for e in devices_col if e.id == device_id),None)
         if found_device:
