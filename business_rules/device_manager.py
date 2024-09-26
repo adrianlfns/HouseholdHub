@@ -119,7 +119,7 @@ class Device_Manager:
            Makes sure that device name is present. Device name must also be unique.
 
            Input: Receives a device dictionary
-           Returns: a tuple with 3 values. ([Validation passed or not], [Validation message], [Name of the input that failed])
+           Returns: a tuple with 3 values. ([Validation passed or not], [Validation message], [Name of the key that failed])
         '''
         
         #device name is required
@@ -127,8 +127,10 @@ class Device_Manager:
         if (device_name is None or device_name == ""):
             return  False, 'Device name is required', 'device_name'
         
-        #check device name already exists
-        found_device = next((e for e in Device_Manager.get_all_devices() if e.device_name == device_name), None)
+        device_id = device_dict.get('id','')
+        
+        #check device name already exists for in other devices
+        found_device = next((e for e in Device_Manager.get_all_devices() if e.device_name == device_name and str(e.id) != device_id), None)
         if found_device:
             return  False, 'Device name already exists', 'device_name'
         

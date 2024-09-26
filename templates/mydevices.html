@@ -20,7 +20,7 @@
 
 <div class="row mt-2 mb-2">
   <div class="col d-flex flex-row-reverse">
-    <a class="btn btn-primary" href="/add_edit_device">Add Device</a>                      
+    <a class="btn btn-primary" href="/add_edit_device"><i class="bi bi-plus-circle"></i> Add Device</a>                      
   </div>       
 </div>
 
@@ -36,11 +36,11 @@
             <div class="p-1">              
               <form method="post" action="\remove_device" class="delete_device flex" >
                 <input type="hidden" name="device_id" value="{{device.id}}">
-                <button type="submit" class="btn btn-sm btn-secondary">Delete</button>
+                <button type="submit" class="btn btn-sm btn-secondary" title="Delete" ><i class="bi bi-trash"></i></button>
                </form> 
             </div>
             <div class="p-1">
-              <a href="/add_edit_device/{{device.id}}" class="btn btn-sm btn-primary">Edit</a>
+              <a href="/add_edit_device/{{device.id}}" class="btn btn-sm btn-primary" title="Edit" ><i class="bi bi-pen"></i></a>
             </div>  
           </div>
 
