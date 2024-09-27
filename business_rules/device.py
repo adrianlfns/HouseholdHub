@@ -36,7 +36,22 @@ class Device:
         '''
         update all the properties from a dictionary
         '''
-        self.id = dict.get("id",0)    
+
+        #small sanitation of the ID
+        self.id = dict.get("id",0)
+
+        #empty means that we may be adding a new device
+        if self.id == '':
+            self.id = 0      
+        
+        #attempt to convert it to int. This is important just to validate the that data is correct.
+        if not isinstance(self.id , int):
+            try:
+                self.id = int(self.id)
+            except ValueError:
+                raise ValueError(f"Invalid device dictionary ID value. Expected an integer value. Found: {self.id }")
+            
+
         self.device_name = dict["device_name"]
         self.device_make = dict["device_make"]
         self.device_model = dict["device_model"]

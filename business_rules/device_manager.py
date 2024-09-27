@@ -51,8 +51,9 @@ class Device_Manager:
             devices_col.append(device)
             device_added = True            
         else:
-            #if the device exists just update         
-            device_to_edit:Device = next((e for e in devices_col if str(e.id) == str(device.id)),None) 
+            #if the device exists just update    
+            print(type(device.id))     
+            device_to_edit:Device = Device_Manager.get_device_by_id(device_id=device.id, devices_col=devices_col)  #next((e for e in devices_col if str(e.id) == str(device.id)),None) 
             if not device_to_edit:
                 raise Exception(f"Device with id {device.id} not found.")
             device_to_edit.update_from_device(device)
@@ -81,21 +82,27 @@ class Device_Manager:
         Given a device it will remove it from the 'database'
         '''
         device_id = device.id
-        devices_col = Device_Manager.get_all_devices() 
-        found_device = next((e for e in devices_col if e.id == device_id),None)
+        devices_col = Device_Manager.get_all_devices() #obtain the devices from the database 
+        found_device = Device_Manager.get_device_by_id(device_id=device_id, devices_col=devices_col) 
         if found_device:
             devices_col.remove(found_device)
             Device_Manager.store_device_col(devices_col)
 
     @staticmethod
-    def get_device_by_id(device_id:int):
+    def get_device_by_id(device_id:int, devices_col:list = None):
         '''
         Gets a device by id.
+        Parameters:
+                device_id (int) - the Id of the device
+                devices_col - a collection of devices. If the collection is None. Retrieve the collection of devices from the database.
         Returns: the device object if exists, otherwise it returns None
-        '''        
-        devices_col = Device_Manager.get_all_devices()
+        '''
+        if devices_col is None: 
+            devices_col = Device_Manager.get_all_devices()
         device = next((e for e in devices_col if e.id == device_id),None) 
-        return device    
+        return device 
+    
+
            
     @staticmethod
     def get_all_devices():

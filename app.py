@@ -18,7 +18,7 @@ def home():
     return flask.render_template('home.html') #see templates directory for corresponding template
 
 @app.get("/mydevices")
-def mydevices():
+def my_devices():
     '''
     route for managing devices
     '''
