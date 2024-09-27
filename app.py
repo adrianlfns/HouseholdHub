@@ -38,12 +38,12 @@ def add_edit_device_get(device_id:int=None):
         try:
             device_id = int(device_id)
         except ValueError:
-          raise Exception(f"Invalid post data. Expected parameter device_id to be int")
+          raise ValueError(f"Invalid post data. Expected parameter device_id to be int")
         
         if device_id > 0:
             device = Device_Manager.get_device_by_id(device_id)
             if not device:
-                raise Exception(f"Device with ID {device_id} not found.")
+                raise ValueError(f"Device with ID {device_id} not found.")
             data = device.to_dictionary()
 
     return flask.render_template('add_edit_device.html',data=data)
@@ -56,20 +56,20 @@ def remove_device():
     device_id = flask.request.form.get("device_id",0)  
 
     if not device_id:
-        raise Exception(f"Invalid post data. expected a parameter named device_id") 
+        raise ValueError(f"Invalid post data. expected a parameter named device_id") 
        
     try:
         device_id = int(device_id)
     except ValueError:
-          raise Exception(f"Invalid post data. Expected parameter device_id to be int")
+          raise ValueError(f"Invalid post data. Expected parameter device_id to be int")
     
     if device_id <=0:
-        raise Exception(f"Invalid post data. Expected parameter device_id to be int > 0")
+        raise ValueError(f"Invalid post data. Expected parameter device_id to be int > 0")
     
     device = Device_Manager.get_device_by_id(device_id)
 
     if not device:
-        raise Exception(f"Device with id {device_id} not found.") 
+        raise ValueError(f"Device with id {device_id} not found.") 
     
     device_name = device.device_name
     Device_Manager.delete_device(device)
