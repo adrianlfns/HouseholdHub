@@ -51,11 +51,10 @@ class Device_Manager:
             devices_col.append(device)
             device_added = True            
         else:
-            #if the device exists just update    
-            print(type(device.id))     
+            #if the device exists just update       
             device_to_edit:Device = Device_Manager.get_device_by_id(device_id=device.id, devices_col=devices_col)  #next((e for e in devices_col if str(e.id) == str(device.id)),None) 
             if not device_to_edit:
-                raise Exception(f"Device with id {device.id} not found.")
+                raise ValueError(f"Device with id {device.id} not found.")
             device_to_edit.update_from_device(device)
             device = device_to_edit
 
