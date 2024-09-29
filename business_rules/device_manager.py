@@ -93,7 +93,7 @@ class Device_Manager:
           This acts as a database update. \n
           Given a list of devices it will dump the list into the 'database', a file named devices.json
         """ 
-        devices_json = json.dumps(devices_col, default=lambda o: o.__dict__)
+        devices_json = json.dumps(devices_col, default=lambda o: o.__dict__, indent=2)
         with open(Device_Manager.DEVICE_FILE_PATH, "w") as devices_file:
             devices_file.write(devices_json)
 

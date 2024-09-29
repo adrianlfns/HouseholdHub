@@ -144,7 +144,7 @@ class Categories_Manager:
           This acts as a database update. \n
           Given a list of categories it will dump the list into the 'database', a file named categories.json
         """ 
-        categories_json = json.dumps(categories_col, default=lambda o: o.__dict__)
+        categories_json = json.dumps(categories_col, default=lambda o: o.__dict__, indent=2)
         with open(Categories_Manager.CATEGORIES_FILE_PATH, "w") as categories_file:
             categories_file.write(categories_json)
 

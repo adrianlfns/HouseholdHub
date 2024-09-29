@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "id": 1,
+    "category_name": "my first category"
+  },
+  {
+    "id": 2,
+    "category_name": "my second"
+  },
+  {
+    "id": 3,
+    "category_name": "11"
+  }
+]
