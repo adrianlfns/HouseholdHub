@@ -106,9 +106,13 @@ def remove_category():
         raise ValueError(f"Category with id {category_id} not found.") 
     
     category_name = category.category_name
-    Categories_Manager.delete_category(category)
+    success_ind, message = Categories_Manager.delete_category(category)
 
-    flask.flash(f'The category "{category_name}" was successfully deleted.')
+    if success_ind:
+        flask.flash(f'The category "{category_name}" was successfully deleted.')
+    else:
+        flask.flash(message, category='error')
+
     return flask.redirect("/my_categories")
 
 
@@ -142,8 +146,6 @@ def add_edit_device_get(device_id:int=None):
             data = device.to_dictionary()
 
     categories_col = Categories_Manager.get_all_categories()
-    for i in categories_col:
-        print(i.id)
 
     return flask.render_template('add_edit_device.html',data=data, categories_col=categories_col)
 
@@ -189,7 +191,8 @@ def add_edit_device_post():
     is_valid, validation_error, invalid_input_name = Device_Manager.validate_device_dict(post_data_collected)
 
     if not is_valid:
-        return flask.render_template('add_edit_device.html', data=post_data_collected, validation_error=validation_error, invalid_input_name=invalid_input_name)
+        categories_col = Categories_Manager.get_all_categories()
+        return flask.render_template('add_edit_device.html', data=post_data_collected, validation_error=validation_error, invalid_input_name=invalid_input_name, categories_col=categories_col)
    
 
     #create a device object
@@ -206,7 +209,7 @@ def add_edit_device_post():
         flask.flash(f'The device was successfully edited.')
         
     
-    #go back to my devices
+    #go back to my devices    
     return flask.redirect("/my_devices")
 
 

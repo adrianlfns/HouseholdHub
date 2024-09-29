@@ -28,6 +28,20 @@ class Device_Manager:
                 device.update_from_dictionary(p)
                 devices_col.append(device)      
         return devices_col
+    
+    @staticmethod
+    def get_devices_by_category_id(category_id:int, devices_col:list = None):
+        '''
+        Finds all the devices that belong to a category given a category list.
+
+        '''
+        if not devices_col:
+            devices_col = Device_Manager.get_all_devices()
+
+        return list(filter(lambda x: x.category_id == category_id, devices_col))
+
+    
+
 
     @staticmethod
     def get_new_device_key(devices_col = None):
@@ -146,6 +160,13 @@ class Device_Manager:
         found_device = next((e for e in Device_Manager.get_all_devices() if e.device_name == device_name and str(e.id) != device_id), None)
         if found_device:
             return  False, 'Device name already exists', 'device_name'
+        
+        #category is required
+        category_id = device_dict.get('category_id',0)
+        if category_id == 0 or category_id is None or category_id == '':
+            return  False, 'Category is required.', 'category_id'
+        
+        
         
         return True, '', ''
     

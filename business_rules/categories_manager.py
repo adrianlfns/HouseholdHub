@@ -1,6 +1,7 @@
 import json
 import os
 from business_rules.category import Category
+from business_rules.device_manager import Device_Manager
 
 class Categories_Manager:
     '''
@@ -27,8 +28,10 @@ class Categories_Manager:
             for p in categories_json:
                 category = Category()
                 category.update_from_dictionary(p)
-                categories_col.append(category)      
-        return sorted(categories_col, key=lambda p: p.category_name)
+                categories_col.append(category) 
+
+        categories_col.sort(key=lambda p: p.category_name) #output the category sorted by name
+        return categories_col
     
     
     @staticmethod
@@ -50,13 +53,25 @@ class Categories_Manager:
         '''
         This acts as a database delete.
         Given a device it will remove it from the 'database'
+
+        returns: a tuple with two values:  
+           First tuple value is a boolean reporting success.
+           Second tuple value is a message.
         '''
         category_id = category.id
         categories_col = Categories_Manager.get_all_categories() #obtain the category from the database 
         found_category = Categories_Manager.get_category_by_id(category_id=category_id, categories_col=categories_col) 
         if found_category:
+            #validation that makes sure that the category is not in use by a device
+            devices =Device_Manager.get_devices_by_category_id(category_id=found_category.id)
+            if len(devices) > 0:
+                return (False, f'The category "{found_category.category_name}" can not be deleted because it is in use by one or more devices.')
+
             categories_col.remove(found_category)
             Categories_Manager.store_category_col(categories_col) 
+
+        return (True, "")
+        
 
     @staticmethod
     def validate_category_dict(category_dict):

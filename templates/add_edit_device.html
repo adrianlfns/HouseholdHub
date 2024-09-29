@@ -10,14 +10,6 @@
 
 {% set data = data if data else {}  %}
 
-{% set cat_col = [] %}
-
-{% for i in categories_col %}
-   {% set cat_col = cat_col.append({'value':i.id, 
-                                    'text':i.category_name}) -%}
-{% endfor %}
-
-
 {% if validation_error  %}
 <div class="p-3 text-danger border border-danger-subtle rounded-3">
     {{validation_error}}
@@ -33,10 +25,10 @@
         </div> 
         <div class="col-sm">
             <label for="category_id">Category name</label>
-            <select name="category_id" class="form-control">
+            <select name="category_id" id="category_id" class="form-control {{'is-invalid' if invalid_input_name=='category_id' else ''}}">
                 <option disabled selected="selected" value="">Please select</option>               
-                {% for i in cat_col %}
-                  <option value="{{i['value']}}">{{i['text']}}</option>
+                {% for i in categories_col %}
+                  <option value="{{i.id}}"  {{'selected' if i.id == data.get('category_id',0) else ''}} >{{i.category_name}}</option>
                 {% endfor %}
             </select>
         </div>      

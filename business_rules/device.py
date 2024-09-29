@@ -6,9 +6,9 @@ class Device:
     def __init__(self):
 
         #general information of the device
-        self.id:int =  None #internal id
+        self.id:int =  None #internal id for the device
         self.device_name = ''
-        self.category = None
+        self.category_id:int = None #internal id for the category
         self.device_make = ''
         self.device_model = ''
 
@@ -51,8 +51,18 @@ class Device:
             except ValueError:
                 raise ValueError(f"Invalid device dictionary ID value. Expected an integer value. Found: {self.id }")
             
+        #small sanitation to the category id
+        self.category_id = dict.get("category_id",0)
+        if self.category_id == '':
+            self.category_id = 0
+        
+        if not isinstance(self.category_id, int):
+            try:
+                self.category_id = int(self.category_id)
+            except ValueError:
+                raise ValueError(f"Invalid device category ID value. Expected and integer value. Found: {self.category_id}")                    
 
-        self.device_name = dict["device_name"]
+        self.device_name = dict["device_name"]        
         self.device_make = dict["device_make"]
         self.device_model = dict["device_model"]
         self.purchase_price_dollars = dict["purchase_price_dollars"]
@@ -60,12 +70,14 @@ class Device:
         self.purchase_date = dict["purchase_date"]
         self.guaranty_expiration_date = dict["guaranty_expiration_date"]
         self.guaranty_notes = dict["guaranty_notes"]
+        
 
     def update_from_device(self, dev):
         '''
         updates this property from another property of type device
         '''
         self.device_name = dev.device_name
+        self.category_id = dev.category_id
         self.device_make = dev.device_make
         self.device_model = dev.device_model
         self.purchase_price_dollars = dev.purchase_price_dollars
