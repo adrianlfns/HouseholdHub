@@ -77,41 +77,6 @@ def add_edit_category_post():
     else:
         flask.flash(f'The category was successfully edited.')
 
-    #go back to my devices
-    return flask.redirect("/my_categories")
-
-
-
-@app.post("/remove_category")
-def remove_category():
-    '''
-    POST route for removing a category
-    '''
-    category_id = flask.request.form.get("category_id",0)  
-
-    if not category_id:
-        raise ValueError(f"Invalid post data. expected a parameter named category_id") 
-       
-    try:
-        category_id = int(category_id)
-    except ValueError:
-          raise ValueError(f"Invalid post data. Expected parameter category_id to be int")
-    
-    if category_id <=0:
-        raise ValueError(f"Invalid post data. Expected parameter category_id to be int > 0")
-    
-    category = Categories_Manager.get_category_by_id(category_id)
-
-    if not category:
-        raise ValueError(f"Category with id {category_id} not found.") 
-    
-    category_name = category.category_name
-    Categories_Manager.delete_category(category)
-
-    flask.flash(f'The category "{category_name}" was successfully deleted.')
-    return flask.redirect("/my_categories")
-
-
 @app.get("/my_devices")
 def my_devices():
     '''

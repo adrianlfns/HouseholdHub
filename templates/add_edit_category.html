@@ -1,0 +1,40 @@
+{# 
+   Add edit category template
+#}
+{% extends "base.html" %}
+{% import "forms.html" as forms %}
+{% block title %}Category add/edit{% endblock %}
+{% block content %}
+
+{% set data = data if data else {}  %}
+
+{% if validation_error  %}
+<div class="p-3 text-danger border border-danger-subtle rounded-3">
+    {{validation_error}}
+</div>
+{% endif %}
+
+<form method="post" action="\add_edit_category" > 
+
+    <div class="row">
+        <div class="col">
+            <label for="category_name">Category name</label>
+            {{ forms.input(id='category_name',name='category_name',type='text', data=data, invalid_input_name=invalid_input_name, is_required=true, autofocus=true) }}
+        </div>       
+    </div>
+     
+    <div class="row mt-2">
+        <div class="col d-flex flex-row-reverse">
+            <div class="p-1">
+                <a class="btn btn-secondary" href="\my_categories">Cancel</a>
+            </div>
+            <div class="p-1">
+                <button type="submit" class="btn btn-primary ">Submit</button> 
+            </div>                       
+        </div>       
+    </div>
+    {{forms.input(id='id',name='id',type='hidden', data=data) }}
+</form>
+
+
+{% endblock %}

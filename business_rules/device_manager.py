@@ -1,10 +1,33 @@
 from business_rules.device import Device
 import json
+import os
 
 class Device_Manager:
     '''
-    Class that manage the data access to multiple devices
+    Class that manage the data access and business logic for devices.
     '''
+
+    DEVICE_FILE_PATH = "db/devices.json" #'constant to know the path where the data for the device is located'
+
+    @staticmethod
+    def get_all_devices():
+        '''
+          Retrieves all the devices from the  'database'
+        '''
+        devices_col = []
+        
+        #just in case, check for file to be empty. If is empty. just return an empty list
+        file_name = Device_Manager.DEVICE_FILE_PATH
+        if os.stat(file_name).st_size == 0:
+            return devices_col
+
+        with open(file_name, "r") as devices_file:
+            devices_json = json.load(devices_file)  
+            for p in devices_json:
+                device = Device()
+                device.update_from_dictionary(p)
+                devices_col.append(device)      
+        return devices_col
 
     @staticmethod
     def get_new_device_key(devices_col = None):
@@ -52,7 +75,7 @@ class Device_Manager:
             device_added = True            
         else:
             #if the device exists just update       
-            device_to_edit:Device = Device_Manager.get_device_by_id(device_id=device.id, devices_col=devices_col)  #next((e for e in devices_col if str(e.id) == str(device.id)),None) 
+            device_to_edit:Device = Device_Manager.get_device_by_id(device_id=device.id, devices_col=devices_col)   
             if not device_to_edit:
                 raise ValueError(f"Device with id {device.id} not found.")
             device_to_edit.update_from_device(device)
@@ -66,12 +89,12 @@ class Device_Manager:
 
     @staticmethod    
     def store_device_col(devices_col):
-        '''
-          This acts as a database update.
+        """
+          This acts as a database update. \n
           Given a list of devices it will dump the list into the 'database', a file named devices.json
-        ''' 
+        """ 
         devices_json = json.dumps(devices_col, default=lambda o: o.__dict__)
-        with open("db/devices.json", "w") as devices_file:
+        with open(Device_Manager.DEVICE_FILE_PATH, "w") as devices_file:
             devices_file.write(devices_json)
 
     @staticmethod  
@@ -90,7 +113,7 @@ class Device_Manager:
     @staticmethod
     def get_device_by_id(device_id:int, devices_col:list = None):
         '''
-        Gets a device by id.
+        Gets a device by id. \n
         Parameters:
                 device_id (int) - the Id of the device
                 devices_col - a collection of devices. If the collection is None. Retrieve the collection of devices from the database.
@@ -102,22 +125,6 @@ class Device_Manager:
         return device 
     
 
-           
-    @staticmethod
-    def get_all_devices():
-        '''
-          Retrieves all the devices from the  'database'
-        '''
-        devices_col = []
-        with open("db/devices.json", "r") as devices_file:
-            devices_json = json.load(devices_file)  
-            for p in devices_json:
-                device = Device()
-                device.update_from_dictionary(p)
-                devices_col.append(device)      
-        return devices_col
-            
-    
     @staticmethod
     def validate_device_dict(device_dict):
         '''

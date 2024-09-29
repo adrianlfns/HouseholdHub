@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}My Categories{% endblock %}
+{% block content %}
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    {% for message in messages %}     
+        <div class="p-3 mb-2 text-success border border-success-subtle rounded-3">
+            {{ message }}
+        </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+{% if not categories_col %}
+  <div class="p-3 mb-2 text-info border border-info-subtle rounded-3">
+    There are no categories
+  </div>
+{% endif %}
+
+<div class="row mt-2 mb-2">
+  <div class="col d-flex flex-row-reverse">
+    <a class="btn btn-primary" href="/add_edit_category"><i class="bi bi-plus-circle"></i> Add Category</a>                      
+  </div>       
+</div>
+
+<div class="row"> 
+    {% for category in categories_col %} 
+    <div class="col-sm-6 col-lg-3 mb-1">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{category.category_name}}</h5>
+          <div class="col d-flex flex-row-reverse">
+            <div class="p-1">              
+              <form method="post" action="\remove_category" class="delete_category flex" >
+                <input type="hidden" name="category_id" value="{{category.id}}">
+                <button type="submit" class="btn btn-sm btn-secondary" title="Delete" ><i class="bi bi-trash"></i></button>
+               </form> 
+            </div>
+            <div class="p-1">
+              <a href="/add_edit_category/{{category.id}}" class="btn btn-sm btn-primary" title="Edit" ><i class="bi bi-pen"></i></a>
+            </div>  
+          </div>
+
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<script type="text/javascript">
+  function onSubmit(event) {
+    if (!confirm('Are you sure you want to delete the selected category?')) {
+      event.preventDefault();
+    }    
+  }
+
+  for(const element of document.getElementsByClassName("delete_category"))
+  {
+    element.addEventListener("submit", onSubmit);  
+  }  
+</script>
+
+
+{% endblock %}
