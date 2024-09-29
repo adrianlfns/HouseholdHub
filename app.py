@@ -119,20 +119,56 @@ def remove_category():
 @app.get("/my_devices")
 def my_devices():
     '''
-    Route for managing devices
+    Route for managing devices.
+    It returns a view with a list of all devices.
+    That view also contains filter capabilities
     '''
     devices_col = Device_Manager.get_all_devices()
     categories_col = Categories_Manager.get_all_categories()
-    for device in devices_col:
-        category = Categories_Manager.get_category_by_id(device.category_id, categories_col=categories_col)
-        device.category_name = ''
-        if category:
-            device.category_name = category.category_name
-    return flask.render_template('my_devices.html',devices_col=devices_col) #see templates directory for corresponding template
+    set_category_to_devices(devices_col, categories_col=categories_col)
+    return flask.render_template('my_devices.html',devices_col=devices_col, categories_col=categories_col) #see templates directory for corresponding template
 
 @app.get("/search_device")
 def search_device():
-    return flask.render_template('my_devices.html') #see templates directory for corresponding template
+    '''
+     This route is suitable to make asynchronous AJAX requests. 
+     It allows filtering devices by category and by a portion of the name.
+    '''
+    devices_col = Device_Manager.get_all_devices()
+
+    #prepare the category filter
+    category_id = flask.request.args.get('category_id',0)
+    if not category_id or category_id == '':
+        category_id = 0
+    category_id = int(category_id)  
+
+    #prepare the device name filter
+    device_name = flask.request.args.get('device_name','')
+    if not device_name:
+        device_name = ''
+    device_name = device_name.strip().upper()
+    
+    #filter the device
+    devices_col = list(filter(lambda x: (category_id <= 0 or x.category_id == category_id) and (device_name == '' or device_name in x.device_name.upper()), devices_col))
+    set_category_to_devices(devices_col)
+    
+    return flask.render_template('devices_col.html',devices_col=devices_col) #see templates directory for corresponding template
+
+
+def set_category_to_devices(devices_col, categories_col = None):
+        '''
+        Iterates over the list of devices and sets the category name
+        '''
+
+        if not categories_col:
+            categories_col = Categories_Manager.get_all_categories()
+
+        for device in devices_col:
+            category = Categories_Manager.get_category_by_id(device.category_id, categories_col=categories_col)
+            device.category_name = ''
+            if category:
+                device.category_name = category.category_name
+
 
 
 @app.get("/add_edit_device/")

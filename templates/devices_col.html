@@ -1,0 +1,23 @@
+{% for device in devices_col %} 
+<div class="col-sm-6 col-lg-3 mb-1">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">{{device.device_name}}</h5>
+      <h6 class="card-subtitle text-muted">Category: {{device.category_name}}</h6>
+
+      <div class="col d-flex flex-row-reverse">
+        <div class="p-1">              
+          <form method="post" action="\remove_device" class="delete_device flex" >
+            <input type="hidden" name="device_id" value="{{device.id}}">
+            <button type="submit" class="btn btn-sm btn-secondary" title="Delete" ><i class="bi bi-trash"></i></button>
+           </form> 
+        </div>
+        <div class="p-1">
+          <a href="/add_edit_device/{{device.id}}" class="btn btn-sm btn-primary" title="Edit" ><i class="bi bi-pen"></i></a>
+        </div>  
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endfor %}

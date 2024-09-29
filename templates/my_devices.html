@@ -26,12 +26,15 @@
       <div class="card-body">
         <div class="d-flex flex-row-reverse gap-1">
           <select class="form-control form-control-sm" 
-               name="category">
-              <option value="">Category</option>
-              <option value="dd">ddd</option>
+               id="category"
+               onchange="find_device()" >
+              <option value="">All Categories</option>
+              {% for category in categories_col %} 
+                <option value="{{category.id}}">{{category.category_name}}</option>
+              {% endfor %}             
           </select>        
-          <input type="text" class="form-control form-control-sm auto_complete" placeholder="Filter device" 
-                name="device_name">
+          <input type="text" autocomplete="off" class="form-control form-control-sm auto_complete" placeholder="Filter device" 
+                id="device_name" onkeyup="find_device()">
         </div>         
       </div>
     </div>                      
@@ -41,34 +44,16 @@
   </div>      
 </div>
 
-<div id="content"></div>
 
-<div class="row"> 
-    {% for device in devices_col %} 
-    <div class="col-sm-6 col-lg-3 mb-1">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">{{device.device_name}}</h5>
-          <h6 class="card-subtitle text-muted">Category: {{device.category_name}}</h6>
-
-          <div class="col d-flex flex-row-reverse">
-            <div class="p-1">              
-              <form method="post" action="\remove_device" class="delete_device flex" >
-                <input type="hidden" name="device_id" value="{{device.id}}">
-                <button type="submit" class="btn btn-sm btn-secondary" title="Delete" ><i class="bi bi-trash"></i></button>
-               </form> 
-            </div>
-            <div class="p-1">
-              <a href="/add_edit_device/{{device.id}}" class="btn btn-sm btn-primary" title="Edit" ><i class="bi bi-pen"></i></a>
-            </div>  
-          </div>
-
-        </div>
-      </div>
-    </div>
-    {% endfor %}
+<div class="row" id="content"> 
+    {% include 'devices_col.html' %}  
   </div>
 </div>
+
+<script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+  crossorigin="anonymous"></script>
 
 <script type="text/javascript">
   function onSubmit(event) {
@@ -77,10 +62,26 @@
     }    
   }
 
-  for(const element of document.getElementsByClassName("delete_device"))
-  {
-    element.addEventListener("submit", onSubmit);  
-  }  
+  function refresh_on_submit(){
+    for(const element of document.getElementsByClassName("delete_device"))
+    {
+      element.removeEventListener("submit", onSubmit);  
+      element.addEventListener("submit", onSubmit);  
+    } 
+  }
+  
+ 
+  function find_device()
+  {  
+    let dev_name_input = document.getElementById('device_name')
+    let category = document.getElementById('category')
+    $.get('/search_device?device_name=' + dev_name_input.value + '&category_id=' + category.value, function(data){
+      document.getElementById('content').innerHTML = data
+      refresh_on_submit();
+    });
+  }
+
+  refresh_on_submit();
 </script>
 
 
