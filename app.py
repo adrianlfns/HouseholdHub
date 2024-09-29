@@ -122,6 +122,12 @@ def my_devices():
     Route for managing devices
     '''
     devices_col = Device_Manager.get_all_devices()
+    categories_col = Categories_Manager.get_all_categories()
+    for device in devices_col:
+        category = Categories_Manager.get_category_by_id(device.category_id, categories_col=categories_col)
+        device.category_name = ''
+        if category:
+            device.category_name = category.category_name
     return flask.render_template('my_devices.html',devices_col=devices_col) #see templates directory for corresponding template
 
 @app.get("/add_edit_device/")

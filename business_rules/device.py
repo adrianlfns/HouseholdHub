@@ -9,6 +9,7 @@ class Device:
         self.id:int =  None #internal id for the device
         self.device_name = ''
         self.category_id:int = None #internal id for the category
+        self.category_name:str = '' #this field will be filled only when needed
         self.device_make = ''
         self.device_model = ''
 

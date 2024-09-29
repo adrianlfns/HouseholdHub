@@ -25,7 +25,7 @@
         </div> 
         <div class="col-sm">
             <label for="category_id">Category name</label>
-            <select name="category_id" id="category_id" class="form-control {{'is-invalid' if invalid_input_name=='category_id' else ''}}">
+            <select name="category_id" id="category_id" required class="form-control {{'is-invalid' if invalid_input_name=='category_id' else ''}}">
                 <option disabled selected="selected" value="">Please select</option>               
                 {% for i in categories_col %}
                   <option value="{{i.id}}"  {{'selected' if i.id == data.get('category_id',0) else ''}} >{{i.category_name}}</option>

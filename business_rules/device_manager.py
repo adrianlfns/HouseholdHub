@@ -20,6 +20,9 @@ class Device_Manager:
         file_name = Device_Manager.DEVICE_FILE_PATH
         if os.stat(file_name).st_size == 0:
             return devices_col
+        
+        
+            
 
         with open(file_name, "r") as devices_file:
             devices_json = json.load(devices_file)  

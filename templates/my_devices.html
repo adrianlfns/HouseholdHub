@@ -2,6 +2,8 @@
 {% block title %}My Devices{% endblock %}
 {% block content %}
 
+<h2>Devices</h2>
+
 {% with messages = get_flashed_messages() %}
   {% if messages %}
     {% for message in messages %}     
@@ -30,7 +32,7 @@
       <div class="card">
         <div class="card-body">
           <h5 class="card-title">{{device.device_name}}</h5>
-          <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+          <h6 class="card-subtitle text-muted">Category: {{device.category_name}}</h6>
 
           <div class="col d-flex flex-row-reverse">
             <div class="p-1">              
