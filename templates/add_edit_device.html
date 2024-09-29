@@ -10,6 +10,13 @@
 
 {% set data = data if data else {}  %}
 
+{% set cat_col = [] %}
+
+{% for i in categories_col %}
+   {% set cat_col = cat_col.append({'value':i.id, 
+                                    'text':i.category_name}) -%}
+{% endfor %}
+
 
 {% if validation_error  %}
 <div class="p-3 text-danger border border-danger-subtle rounded-3">
@@ -20,11 +27,19 @@
 <form method="post" action="\add_edit_device" > 
 
     <div class="row">
-        <div class="col">
+        <div class="col-sm">
             <label for="device_name">Device name</label>
             {{ forms.input(id='device_name',name='device_name',type='text', data=data, invalid_input_name=invalid_input_name, is_required=true) }}
-            <!-- <input type="text" id="deviceName" name="deviceName"  class="form-control {{'is-invalid' if invalid_input_name=='deviceName' else ''}}" autocomplete="off" value="{{ data['deviceName'] if data else '' }}">  -->
-        </div>       
+        </div> 
+        <div class="col-sm">
+            <label for="category_id">Category name</label>
+            <select name="category_id" class="form-control">
+                <option disabled selected="selected" value="">Please select</option>               
+                {% for i in cat_col %}
+                  <option value="{{i['value']}}">{{i['text']}}</option>
+                {% endfor %}
+            </select>
+        </div>      
     </div>
 
     <div class="row">

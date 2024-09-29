@@ -28,7 +28,8 @@ class Categories_Manager:
                 category = Category()
                 category.update_from_dictionary(p)
                 categories_col.append(category)      
-        return categories_col
+        return sorted(categories_col, key=lambda p: p.category_name)
+    
     
     @staticmethod
     def get_category_by_id(category_id:int, categories_col:list = None):

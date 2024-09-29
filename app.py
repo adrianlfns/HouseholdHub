@@ -47,7 +47,7 @@ def add_edit_category_get(category_id:int=None):
             category = Categories_Manager.get_category_by_id(category_id)
             if not category:
                 raise ValueError(f"Category with ID {category_id} not found.")
-            data = category.to_dictionary()
+            data = category.to_dictionary()   
         
     return flask.render_template('add_edit_category.html', data=data)
 
@@ -141,7 +141,11 @@ def add_edit_device_get(device_id:int=None):
                 raise ValueError(f"Device with ID {device_id} not found.")
             data = device.to_dictionary()
 
-    return flask.render_template('add_edit_device.html',data=data)
+    categories_col = Categories_Manager.get_all_categories()
+    for i in categories_col:
+        print(i.id)
+
+    return flask.render_template('add_edit_device.html',data=data, categories_col=categories_col)
 
 @app.post("/remove_device")
 def remove_device():

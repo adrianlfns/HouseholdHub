@@ -1,14 +1,34 @@
 [
   {
     "id": 1,
-    "category_name": "my first category"
+    "category_name": "Computers"
   },
   {
     "id": 2,
-    "category_name": "my second"
+    "category_name": "Phones"
   },
   {
     "id": 3,
-    "category_name": "11"
+    "category_name": "TVs"
+  },
+  {
+    "id": 4,
+    "category_name": "Amazon Devices"
+  },
+  {
+    "id": 5,
+    "category_name": "Google Devices"
+  },
+  {
+    "id": 6,
+    "category_name": "Tablets"
+  },
+  {
+    "id": 7,
+    "category_name": "Miscellaneous"
+  },
+  {
+    "id": 8,
+    "category_name": "Sports Equipment"
   }
 ]
