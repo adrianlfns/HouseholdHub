@@ -130,6 +130,11 @@ def my_devices():
             device.category_name = category.category_name
     return flask.render_template('my_devices.html',devices_col=devices_col) #see templates directory for corresponding template
 
+@app.get("/search_device")
+def search_device():
+    return flask.render_template('my_devices.html') #see templates directory for corresponding template
+
+
 @app.get("/add_edit_device/")
 @app.get("/add_edit_device/<device_id>")
 def add_edit_device_get(device_id:int=None):

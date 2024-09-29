@@ -24,16 +24,24 @@
   <div class="col">
     <div class="card" style="width: 100%;">
       <div class="card-body">
-        <div class="d-flex flex-row-reverse gap-2">
-          <a class="btn btn-primary" href="/add_edit_device"><i class="bi bi-plus-circle"></i> Add Device</a>  
-          <div class="flex-fill" >
-              <input type="text" class="form-control" placeholder="Filter device"> 
-          </div>          
+        <div class="d-flex flex-row-reverse gap-1">
+          <select class="form-control form-control-sm" 
+               name="category">
+              <option value="">Category</option>
+              <option value="dd">ddd</option>
+          </select>        
+          <input type="text" class="form-control form-control-sm auto_complete" placeholder="Filter device" 
+                name="device_name">
         </div>         
       </div>
     </div>                      
-  </div>       
+  </div> 
+  <div class="col-md-auto mt-2 text-end">
+     <a class="btn btn-primary" href="/add_edit_device"><i class="bi bi-plus-circle"></i> Add Device</a>  
+  </div>      
 </div>
+
+<div id="content"></div>
 
 <div class="row"> 
     {% for device in devices_col %} 
