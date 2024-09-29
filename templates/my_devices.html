@@ -21,8 +21,17 @@
 {% endif %}
 
 <div class="row mt-2 mb-2">
-  <div class="col d-flex flex-row-reverse">
-    <a class="btn btn-primary" href="/add_edit_device"><i class="bi bi-plus-circle"></i> Add Device</a>                      
+  <div class="col">
+    <div class="card" style="width: 100%;">
+      <div class="card-body">
+        <div class="d-flex flex-row-reverse gap-2">
+          <a class="btn btn-primary" href="/add_edit_device"><i class="bi bi-plus-circle"></i> Add Device</a>  
+          <div class="flex-fill" >
+              <input type="text" class="form-control" placeholder="Filter device"> 
+          </div>          
+        </div>         
+      </div>
+    </div>                      
   </div>       
 </div>
 
