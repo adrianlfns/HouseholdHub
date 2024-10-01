@@ -17,8 +17,8 @@
 
 # Instructions to use the program
     1 On the console make sure to point the directory to this project's root folder. 
-    2 On the console run python app.py
-    3 Once you run the command, the console will show a list of http address that can be used to launch the web application. You can press control and click on the address suggested on the console. That will launch the web application in a browser.
+    2 On the console run the command 'python app.py'
+    3 Once you run the command, the console will show a list of http addresses that can be used to launch the web application. You can press control and click on the address suggested on the console. That will launch the web application in a browser.
 
 # Project specific files and folders
     * app.py - This files initializes the flask web framework and registers all the possible routes that can be accessed in this web app.
