@@ -7,7 +7,7 @@ class Device_Manager:
     Class that manage the data access and business logic for devices.
     '''
 
-    DEVICE_FILE_PATH = "db/devices.json" #'constant to know the path where the data for the device is located'
+    DEVICE_FILE_PATH = os.path.join('db','devices.json') #"db/devices.json"  'constant' to know the path where the data for the device is located'
 
     @staticmethod
     def get_all_devices():

@@ -8,7 +8,7 @@ class Categories_Manager:
     Class that manages the data access and business logic for categories.
     '''
 
-    CATEGORIES_FILE_PATH = "db/categories.json" #'constant to know the path where the data for the device is located'
+    CATEGORIES_FILE_PATH = os.path.join('db','categories.json') #"db/categories.json" 'constant' to know the path where the data for the device is located'
 
     @staticmethod
     def get_all_categories():
