@@ -15,15 +15,17 @@ class Device_Manager:
           Retrieves all the devices from the  'database'
         '''
         devices_col = []
-        
-        #just in case, check for file to be empty. If is empty. just return an empty list
+
+        #just in case, check if the file exists
         file_name = Device_Manager.DEVICE_FILE_PATH
-        if os.stat(file_name).st_size == 0:
+        if not os.path.exists(file_name):
             return devices_col
         
-        
-            
+        #just in case, check for file to be empty. If is empty. just return an empty list        
+        if os.stat(file_name).st_size == 0:
+            return devices_col
 
+        #open an read the JSON file
         with open(file_name, "r") as devices_file:
             devices_json = json.load(devices_file)  
             for p in devices_json:

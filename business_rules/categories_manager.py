@@ -17,8 +17,14 @@ class Categories_Manager:
         '''
         categories_col = []
 
-        #just in case, check for file to be empty. If is empty. just return an empty list
+        
         file_name = Categories_Manager.CATEGORIES_FILE_PATH
+        
+        #just in case, check if the file exists
+        if not os.path.exists(file_name):
+            return categories_col
+      
+        #just in case, check for file to be empty. If is empty. just return an empty list
         if os.stat(file_name).st_size == 0:
             return categories_col
 
