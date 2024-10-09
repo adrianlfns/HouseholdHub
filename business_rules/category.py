@@ -1,11 +1,13 @@
-class Category:
+from business_rules.entity_base import EntityBase
+
+class Category(EntityBase):
     '''
     Class that represents the information of a single category
     '''
 
     def __init__(self):
+        EntityBase.__init__(self)
         #general information of the category
-        self.id:int =  None #internal id
         self.category_name = ''
 
     def update_from_dictionary(self, dict:dict):
@@ -29,11 +31,6 @@ class Category:
             
         self.category_name = dict['category_name']
 
-    def to_dictionary(self):
-        '''
-        returns a dictionary representation of this object.        
-        '''
-        return self.__dict__
     
     def update_from_category(self, cat):
         '''

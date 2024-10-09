@@ -1,12 +1,14 @@
-class Device:
+from business_rules.entity_base import EntityBase
+
+class Device (EntityBase):
     '''
     Class that represents the information of a single device
     '''
 
     def __init__(self):
+        EntityBase.__init__(self)
 
-        #general information of the device
-        self.id:int =  None #internal id for the device
+        #general information of the device        
         self.device_name = ''
         self.category_id:int = None #internal id for the category
         self.category_name:str = '' #this field will be filled only when needed
@@ -27,11 +29,6 @@ class Device:
         self.purchase_receipt_doc_ref = []
         self.guaranty_doc_ref = []
 
-    def to_dictionary(self):
-        '''
-        returns a dictionary representation of this object.        
-        '''
-        return self.__dict__
 
     def update_from_dictionary(self, dict:dict):
         '''

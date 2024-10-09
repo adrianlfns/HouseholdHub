@@ -30,5 +30,9 @@
   {
     "id": 6,
     "category_name": "Tablets"
+  },
+  {
+    "id": 9,
+    "category_name": "some new categories"
   }
 ]

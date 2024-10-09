@@ -30,5 +30,21 @@
     "manuals_doc_ref": [],
     "purchase_receipt_doc_ref": [],
     "guaranty_doc_ref": []
+  },
+  {
+    "id": 3,
+    "device_name": "another device2",
+    "category_id": 7,
+    "category_name": "",
+    "device_make": "",
+    "device_model": "",
+    "purchase_price_dollars": "",
+    "purchase_store": "",
+    "purchase_date": "",
+    "guaranty_expiration_date": "",
+    "guaranty_notes": "",
+    "manuals_doc_ref": [],
+    "purchase_receipt_doc_ref": [],
+    "guaranty_doc_ref": []
   }
 ]
