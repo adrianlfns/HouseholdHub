@@ -26,6 +26,7 @@
     * templates/base.html - This file is the base template for all pages. It contains the commonly used html across the site.
     * directory 'static' - In this directory you will find all the files that will be served statically, css, javascript, images, etc. 
     * directory 'business_rules' - In this directory/package you will find all of the classes related to the business rules of the project.
+    * business_rules/entity_base.py - In the module entity_base, you will find a class EntityBase class which is a base class for other classes such as Device and Category. This little class contains the property ID which is common for Devices and Categories and also another common method which is to_dictionary
     * business_rules/device.py  - In the module device.py, you will find the class Device which represents the information of a single device. 
     * business_rules/device_manager.py - In the module device_manager, you will find a class Device_Manager that handles all the data access logic for a device: (Create, Update, Delete, List, Find ,etc)
     * business_rules/category.py -In the module category.py, you will find the class Category which represents the information of a single category.
