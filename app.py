@@ -121,7 +121,7 @@ def my_devices():
     '''
     Route for managing devices.
     It returns a view with a list of all devices.
-    That view also contains filter capabilities
+    That view also contains filter capabilities (see search_device route)
     '''
     devices_col = Device_Manager.get_all_devices()
     categories_col = Categories_Manager.get_all_categories()

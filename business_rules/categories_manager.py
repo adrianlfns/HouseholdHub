@@ -2,6 +2,7 @@ import json
 import os
 from business_rules.category import Category
 from business_rules.device_manager import Device_Manager
+from business_rules.entity_base import EntityBase
 
 class Categories_Manager:
     '''
@@ -149,16 +150,9 @@ class Categories_Manager:
         '''
         if not categories_col:
             categories_col = Categories_Manager.get_all_categories()
-        
-        max_category = None 
-        if len(categories_col) > 0:
-            max_category = max(categories_col, key=lambda x: x.id) 
-            if max_category:
-                next_id = max_category.id + 1                
-        else:
-            next_id = 1
 
-        return next_id  
+        return EntityBase.get_new_entity_key(categories_col)
+     
     
     @staticmethod
     def store_category_col(categories_col):

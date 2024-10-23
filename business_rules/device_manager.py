@@ -1,4 +1,5 @@
 from business_rules.device import Device
+from business_rules.entity_base import EntityBase
 import json
 import os
 
@@ -55,15 +56,8 @@ class Device_Manager:
         '''
         if not devices_col:
             devices_col = Device_Manager.get_all_devices()
-        
-        max_device = None 
-        if len(devices_col) > 0:
-            max_device = max(devices_col, key=lambda x: x.id) 
-            if max_device:
-                next_id = max_device.id + 1                
-        else:
-            next_id = 1
-        return next_id  
+
+        return EntityBase.get_new_entity_key(devices_col)
         
 
     @staticmethod
