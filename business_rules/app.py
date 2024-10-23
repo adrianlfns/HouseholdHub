@@ -18,7 +18,14 @@ def home():
     '''
     Initial route to land on the home page.
     '''
-    return flask.render_template('home.html') #see templates directory for corresponding template
+    device_count_by_cat_col = Device_Manager.get_device_count_by_categories()
+    categories_col = Categories_Manager.get_all_categories()
+    for device_count_by_cat in device_count_by_cat_col:
+        category = Categories_Manager.get_category_by_id(category_id=device_count_by_cat.category_id, categories_col=categories_col)
+        if category:
+            device_count_by_cat.category_name = category.category_name    
+
+    return flask.render_template('home.html', device_count_by_cat_col=device_count_by_cat_col) #see templates directory for corresponding template
 
 @app.get("/my_categories")
 def my_categories():
