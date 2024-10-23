@@ -1,4 +1,5 @@
 from business_rules.entity_base import EntityBase
+from datetime import datetime
 
 class Device (EntityBase):
     '''
@@ -20,14 +21,30 @@ class Device (EntityBase):
         self.purchase_store = ''
         self.purchase_date = None
 
-        #guaranty information of the device
-        self.guaranty_expiration_date = None
-        self.guaranty_notes = None
+        #warranty information of the device
+        self.warranty_expiration_date = None
+        self.warranty_notes = None
 
         #references to documents
         self.manuals_doc_ref = [] 
         self.purchase_receipt_doc_ref = []
-        self.guaranty_doc_ref = []
+        self.warranty_doc_ref = []
+
+    @property
+    def warranty_expiration_date_formatted(self, empty_value='Unknown'):
+        '''
+        returns the warranty expiration date in a friendly format.
+        returns an empty value if the date is empty.
+        '''
+
+        if not self.warranty_expiration_date or self.warranty_expiration_date =='':
+            return empty_value       
+ 
+        date = datetime.strptime(self.warranty_expiration_date,'%Y-%m-%d')      
+        
+        return date.strftime("%A %B %d %Y")
+        
+
 
 
     def update_from_dictionary(self, dict:dict):
@@ -66,8 +83,8 @@ class Device (EntityBase):
         self.purchase_price_dollars = dict["purchase_price_dollars"]
         self.purchase_store = dict["purchase_store"]
         self.purchase_date = dict["purchase_date"]
-        self.guaranty_expiration_date = dict["guaranty_expiration_date"]
-        self.guaranty_notes = dict["guaranty_notes"]
+        self.warranty_expiration_date = dict.get("warranty_expiration_date",'')
+        self.warranty_notes = dict.get("warranty_notes",'')
         
 
     def update_from_device(self, dev):
@@ -81,8 +98,8 @@ class Device (EntityBase):
         self.purchase_price_dollars = dev.purchase_price_dollars
         self.purchase_store = dev.purchase_store
         self.purchase_date = dev.purchase_date
-        self.guaranty_expiration_date = dev.guaranty_expiration_date
-        self.guaranty_notes = dev.guaranty_notes
+        self.warranty_expiration_date = dev.warranty_expiration_date
+        self.warranty_notes = dev.warranty_notes
 
 
 

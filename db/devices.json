@@ -9,11 +9,11 @@
     "purchase_price_dollars": "",
     "purchase_store": "",
     "purchase_date": "",
-    "guaranty_expiration_date": "",
-    "guaranty_notes": "",
+    "warranty_expiration_date": "2025-10-23",
+    "warranty_notes": "",
     "manuals_doc_ref": [],
     "purchase_receipt_doc_ref": [],
-    "guaranty_doc_ref": []
+    "warranty_doc_ref": []
   },
   {
     "id": 2,
@@ -25,11 +25,11 @@
     "purchase_price_dollars": "",
     "purchase_store": "",
     "purchase_date": "",
-    "guaranty_expiration_date": "",
-    "guaranty_notes": "",
+    "warranty_expiration_date": "",
+    "warranty_notes": "",
     "manuals_doc_ref": [],
     "purchase_receipt_doc_ref": [],
-    "guaranty_doc_ref": []
+    "warranty_doc_ref": []
   },
   {
     "id": 3,
@@ -41,10 +41,10 @@
     "purchase_price_dollars": "",
     "purchase_store": "",
     "purchase_date": "",
-    "guaranty_expiration_date": "",
-    "guaranty_notes": "",
+    "warranty_expiration_date": "",
+    "warranty_notes": "",
     "manuals_doc_ref": [],
     "purchase_receipt_doc_ref": [],
-    "guaranty_doc_ref": []
+    "warranty_doc_ref": []
   }
 ]
