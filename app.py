@@ -149,8 +149,11 @@ def my_devices():
         #if selected category has a value. Filter out by that category value
         devices_col = [i for i in devices_col if i.category_id == selected_category_id] 
 
+    #set the category name to the devices that will be rendered
     categories_col = Categories_Manager.get_all_categories()
     set_category_to_devices(devices_col, categories_col=categories_col)
+
+    #render the template
     return flask.render_template('my_devices.html',
                                  devices_col=devices_col, 
                                  categories_col=categories_col,
