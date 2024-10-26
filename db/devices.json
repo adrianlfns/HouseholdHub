@@ -46,5 +46,21 @@
     "manuals_doc_ref": [],
     "purchase_receipt_doc_ref": [],
     "warranty_doc_ref": []
+  },
+  {
+    "id": 4,
+    "device_name": "another device ",
+    "category_id": 3,
+    "category_name": "",
+    "device_make": "",
+    "device_model": "",
+    "purchase_price_dollars": "",
+    "purchase_store": "",
+    "purchase_date": "",
+    "warranty_expiration_date": "",
+    "warranty_notes": "",
+    "manuals_doc_ref": [],
+    "purchase_receipt_doc_ref": [],
+    "warranty_doc_ref": []
   }
 ]
