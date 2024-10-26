@@ -137,19 +137,24 @@ def my_devices():
 
     #capture and clean up the category_id parameter
     selected_category_id = flask.request.args.get("category_id",0) 
-    if selected_category_id and selected_category_id.isnumeric():
-        selected_category_id = int(selected_category_id)
-    else:
-        selected_category_id = 0
+    if selected_category_id != 0:
+        try:
+            selected_category_id = int(selected_category_id)
+        except:
+            selected_category_id = 0
 
     devices_col = Device_Manager.get_all_devices()
 
     if selected_category_id > 0:
-        devices_col = [i for i in devices_col if i.category_id == selected_category_id]
+        #if selected category has a value. Filter out by that category value
+        devices_col = [i for i in devices_col if i.category_id == selected_category_id] 
 
     categories_col = Categories_Manager.get_all_categories()
     set_category_to_devices(devices_col, categories_col=categories_col)
-    return flask.render_template('my_devices.html',devices_col=devices_col, categories_col=categories_col,selected_category_id=selected_category_id) #see templates directory for corresponding template
+    return flask.render_template('my_devices.html',
+                                 devices_col=devices_col, 
+                                 categories_col=categories_col,
+                                 selected_category_id=selected_category_id) #see templates directory for corresponding template
 
 @app.get("/search_device")
 def search_device():
