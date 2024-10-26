@@ -30,7 +30,7 @@
                onchange="find_device()" >
               <option value="">All Categories</option>
               {% for category in categories_col %} 
-                <option value="{{category.id}}">{{category.category_name}}</option>
+                <option value="{{category.id}}"  {% if category.id == selected_category_id%}selected{% endif %}>{{category.category_name}}</option>
               {% endfor %}             
           </select>        
           <input type="text" autocomplete="off" class="form-control form-control-sm auto_complete" placeholder="Filter device" 

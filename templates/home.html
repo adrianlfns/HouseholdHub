@@ -2,18 +2,21 @@
 {% block title %}Home{% endblock %}
 {% block content %}
 
+<h2>Dashboard</h2>
 
-<div class="card" style="width: 18rem;">
+<div class="card">
     <div class="card-header">
         Device Count by Category
     </div>
     <ul class="list-group list-group-flush">
         {% for device_cat in device_count_by_cat_col %}         
-          <li class="list-group-item">{{device_cat.category_name}} <span class="badge text-bg-primary">{{device_cat.device_count}}</span></li>
+          <li class="list-group-item">
+            <a href="my_devices?category_id={{device_cat.category_id}}" style="display:block;  text-decoration: none;">
+                {{device_cat.category_name}} <span title="{{device_cat.device_count}} device(s)" class="badge text-bg-primary">{{device_cat.device_count}}</span>            
+            </a> 
+        </li>           
         {% endfor %}
     </ul>
 </div>
-
-
 
 {% endblock %}
