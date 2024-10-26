@@ -1,5 +1,18 @@
 {% extends "base.html" %}
 {% block title %}Home{% endblock %}
 {% block content %}
-    Home hellowd1
+
+<div class="card" style="width: 18rem;">
+    <div class="card-header">
+        Device Count by Category
+    </div>
+    <ul class="list-group list-group-flush">
+        {% for device_cat in device_count_by_cat_col %}         
+          <li class="list-group-item">{{device_cat.category_name}} <span class="badge text-bg-primary">{{device_cat.device_count}}</span></li>
+        {% endfor %}
+    </ul>
+</div>
+
+
+
 {% endblock %}

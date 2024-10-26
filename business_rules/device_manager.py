@@ -52,17 +52,17 @@ class Device_Manager:
     def get_device_count_by_categories(devices_col:list = None):
         """
         Returns a number of devices per each category ID 
-        """
+        """        
         if not devices_col:
             devices_col = Device_Manager.get_all_devices()
 
         category_count = {}
 
-        for device in devices_col:            
+        for device in devices_col:
             current_count = category_count.get(device.category_id,0)
-            category_count[device.category_id] = current_count + 1   
+            category_count[device.category_id] = current_count + 1 
         
-        return [CategoryCount(category_id=device_id, device_count=count) for device_id, count in category_count.values()]
+        return [CategoryCount(category_id=device_id, device_count=count) for (device_id, count) in category_count.items()]
     
 
 
