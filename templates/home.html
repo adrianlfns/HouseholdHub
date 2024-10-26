@@ -4,19 +4,59 @@
 
 <h2>Dashboard</h2>
 
-<div class="card">
-    <div class="card-header">
-        Device Count by Category
+<div class="row"> 
+    <div class="col-sm-6 col-lg-3 mb-1">
+        <div class="card">
+            <div class="card-header">
+                Device Count by Category
+            </div>
+            <ul class="list-group list-group-flush">
+                {% for device_cat in device_count_by_cat_col %}         
+                  <li class="list-group-item">
+                    <a href="my_devices?category_id={{device_cat.category_id}}" style="display:block;  text-decoration: none;">
+                        {{device_cat.category_name}} <span title="{{device_cat.device_count}} device(s)" class="badge text-bg-primary">{{device_cat.device_count}} device(s)</span>            
+                    </a> 
+                </li>           
+                {% endfor %}
+            </ul>
+        </div>
     </div>
-    <ul class="list-group list-group-flush">
-        {% for device_cat in device_count_by_cat_col %}         
-          <li class="list-group-item">
-            <a href="my_devices?category_id={{device_cat.category_id}}" style="display:block;  text-decoration: none;">
-                {{device_cat.category_name}} <span title="{{device_cat.device_count}} device(s)" class="badge text-bg-primary">{{device_cat.device_count}}</span>            
-            </a> 
-        </li>           
-        {% endfor %}
-    </ul>
+    <div class="col-sm-6 col-lg-3 mb-1">
+        <div class="card">
+            <div class="card-header">
+                Device Count by Warranty Expiration
+            </div>
+            <ul class="list-group list-group-flush">             
+                  <li class="list-group-item text-danger">
+                    <a href="" class="text-danger" style="display:block;  text-decoration: none;">
+                        In three months <span title="nn device(s)" class="badge text-bg-danger">nnn device(s)</span>            
+                    </a> 
+                  </li> 
+                  <li class="list-group-item  text-danger">
+                    <a href="" class="text-danger" style="display:block;  text-decoration: none;">
+                        In six months <span title="nn device(s)" class="badge text-bg-danger">nnn device(s)</span>            
+                    </a> 
+                  </li>
+                  <li class="list-group-item">
+                    <a href="" style="display:block;  text-decoration: none;">
+                        In a year <span title="nn device(s)" class="badge text-bg-primary">nnn device(s)</span>            
+                    </a> 
+                  </li>
+                  <li class="list-group-item">
+                    <a href="" style="display:block;  text-decoration: none;">
+                        In more than a year <span title="nn device(s)" class="badge text-bg-primary">nnn device(s)</span>            
+                    </a> 
+                  </li>
+                  <li class="list-group-item text-dark">
+                    <a href="" class="text-dark" style="display:block;  text-decoration: none;">
+                        Unknown Expiration <span title="nn device(s)" class="badge text-bg-dark">nnn device(s)</span>            
+                    </a> 
+                  </li>
+            </ul>
+        </div>
+    </div>
 </div>
+
+
 
 {% endblock %}
