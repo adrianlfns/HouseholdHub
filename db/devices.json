@@ -62,5 +62,21 @@
     "manuals_doc_ref": [],
     "purchase_receipt_doc_ref": [],
     "warranty_doc_ref": []
+  },
+  {
+    "id": 5,
+    "device_name": "Nintendo Switch",
+    "category_id": 9,
+    "category_name": "",
+    "device_make": "Nintendo",
+    "device_model": "",
+    "purchase_price_dollars": "",
+    "purchase_store": "Walmart",
+    "purchase_date": "",
+    "warranty_expiration_date": "",
+    "warranty_notes": "",
+    "manuals_doc_ref": [],
+    "purchase_receipt_doc_ref": [],
+    "warranty_doc_ref": []
   }
 ]
