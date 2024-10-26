@@ -51,7 +51,8 @@ class Device_Manager:
     @staticmethod
     def get_device_count_by_categories(devices_col:list = None):
         """
-        Returns a number of devices per each category ID 
+        Returns a number of devices per each category ID.
+        See class CategoryCount in module category_count
         """        
         if not devices_col:
             devices_col = Device_Manager.get_all_devices()
@@ -63,6 +64,15 @@ class Device_Manager:
             category_count[device.category_id] = current_count + 1 
         
         return [CategoryCount(category_id=device_id, device_count=count) for (device_id, count) in category_count.items()]
+    
+    @staticmethod
+    def get_device_count_by_warranty_expiration(devices_col:list = None):
+        """
+        Returns a number of devices per different expirations
+        See class WarrantyDeviceCount in module category_count
+        """ 
+        pass   
+
     
 
 
