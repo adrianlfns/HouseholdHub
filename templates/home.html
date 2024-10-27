@@ -26,30 +26,26 @@
             <div class="card-header">
                 Device Count by Warranty Expiration
             </div>
-            <ul class="list-group list-group-flush">             
-                  <li class="list-group-item text-danger">
+            <ul class="list-group list-group-flush">  
+                
+                <li class="list-group-item text-danger">
                     <a href="" class="text-danger" style="display:block;  text-decoration: none;">
-                        In three months <span title="nn device(s)" class="badge text-bg-danger">nnn device(s)</span>            
-                    </a> 
-                  </li> 
-                  <li class="list-group-item  text-danger">
-                    <a href="" class="text-danger" style="display:block;  text-decoration: none;">
-                        In six months <span title="nn device(s)" class="badge text-bg-danger">nnn device(s)</span>            
+                       Warranty Expired <span class="badge text-bg-danger">{{device_count_by_expiration_category.get(1,0)}} device(s)</span>            
                     </a> 
                   </li>
                   <li class="list-group-item">
                     <a href="" style="display:block;  text-decoration: none;">
-                        In a year <span title="nn device(s)" class="badge text-bg-primary">nnn device(s)</span>            
+                        Expires in a year or less <span class="badge text-bg-primary">{{device_count_by_expiration_category.get(2,0)}} device(s)</span>            
                     </a> 
                   </li>
                   <li class="list-group-item">
                     <a href="" style="display:block;  text-decoration: none;">
-                        In more than a year <span title="nn device(s)" class="badge text-bg-primary">nnn device(s)</span>            
+                        In more than a year <span class="badge text-bg-primary">{{device_count_by_expiration_category.get(3,0)}} device(s)</span>            
                     </a> 
                   </li>
                   <li class="list-group-item text-dark">
                     <a href="" class="text-dark" style="display:block;  text-decoration: none;">
-                        Unknown Expiration <span title="nn device(s)" class="badge text-bg-dark">nnn device(s)</span>            
+                        Unknown Expiration <span class="badge text-bg-dark">{{device_count_by_expiration_category.get(4,0)}} device(s)</span>            
                     </a> 
                   </li>
             </ul>

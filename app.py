@@ -20,15 +20,21 @@ def home():
     Initial route to land on the home page.
     This page contains a couple of dashboards
     '''
-    device_count_by_cat_col = Device_Manager.get_device_count_by_categories()    
 
+    #Dashboard section 1 - device count by categories
+    device_count_by_cat_col = Device_Manager.get_device_count_by_categories()
     categories_col = Categories_Manager.get_all_categories()
     for device_count_by_cat in device_count_by_cat_col:
         category = Categories_Manager.get_category_by_id(category_id=device_count_by_cat.category_id, categories_col=categories_col)
         if category:
             device_count_by_cat.category_name = category.category_name 
+    #Dashboard section 2 - device count by expiration date
+    device_count_by_expiration_category = Device_Manager.get_device_count_by_warranty_expiration()
+
     
-    return flask.render_template('home.html', device_count_by_cat_col=sorted(device_count_by_cat_col, key=lambda a : a.category_name)) #see templates directory for corresponding template
+    return flask.render_template('home.html', 
+                                 device_count_by_cat_col=sorted(device_count_by_cat_col, key=lambda a : a.category_name),
+                                 device_count_by_expiration_category = device_count_by_expiration_category) #see templates directory for corresponding template
 
 
 @app.get("/my_categories")

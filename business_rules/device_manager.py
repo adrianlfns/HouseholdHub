@@ -3,11 +3,18 @@ from business_rules.entity_base import EntityBase
 from business_rules.category_count import CategoryCount
 import json
 import os
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 class Device_Manager:
     '''
     Class that manage the data access and business logic for devices.
     '''
+
+    WARRANTY_EXPIRATION_STATUS_EXPIRED = 1    
+    WARRANTY_EXPIRATION_STATUS_EXPIRES_YEAR = 2
+    WARRANTY_EXPIRATION_STATUS_EXPIRES_YEAR_PLUS = 3
+    WARRANTY_EXPIRATION_STATUS_EXPIRES_UNKNOWN = 4
 
     DEVICE_FILE_PATH = os.path.join('db','devices.json') #"db/devices.json"  'constant' to know the path where the data for the device is located'
 
@@ -68,10 +75,35 @@ class Device_Manager:
     @staticmethod
     def get_device_count_by_warranty_expiration(devices_col:list = None):
         """
-        Returns a number of devices per different expirations
-        See class WarrantyDeviceCount in module category_count
+        Returns a number of devices per different expiration types
         """ 
-        pass   
+        if not devices_col:
+            devices_col = Device_Manager.get_all_devices()
+        
+        device_count_by_warranty_expiration = {}  
+
+        today_date = datetime.today() 
+        year_from_today = today_date + relativedelta(years=1)
+
+        for device in devices_col:
+            if not device.warranty_expiration_date or device.warranty_expiration_date == "":
+                device_count_by_warranty_expiration[Device_Manager.WARRANTY_EXPIRATION_STATUS_EXPIRES_UNKNOWN] = device_count_by_warranty_expiration.get(Device_Manager.WARRANTY_EXPIRATION_STATUS_EXPIRES_UNKNOWN,0) + 1
+            else:
+                expiration_date = datetime.strptime(device.warranty_expiration_date,'%Y-%m-%d')
+                               
+                if expiration_date <= today_date:
+                    device_count_by_warranty_expiration[Device_Manager.WARRANTY_EXPIRATION_STATUS_EXPIRED] = device_count_by_warranty_expiration.get(Device_Manager.WARRANTY_EXPIRATION_STATUS_EXPIRED,0) + 1
+                else:                 
+                    if (expiration_date <= year_from_today):
+                        device_count_by_warranty_expiration[Device_Manager.WARRANTY_EXPIRATION_STATUS_EXPIRES_YEAR] = device_count_by_warranty_expiration.get(Device_Manager.WARRANTY_EXPIRATION_STATUS_EXPIRES_YEAR,0) + 1
+                    else:
+                        device_count_by_warranty_expiration[Device_Manager.WARRANTY_EXPIRATION_STATUS_EXPIRES_YEAR_PLUS] = device_count_by_warranty_expiration.get(Device_Manager.WARRANTY_EXPIRATION_STATUS_EXPIRES_YEAR_PLUS,0) + 1
+
+        return device_count_by_warranty_expiration
+
+
+
+           
 
     
 
