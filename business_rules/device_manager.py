@@ -4,7 +4,6 @@ from business_rules.category_count import CategoryCount
 import json
 import os
 from datetime import datetime
-from dateutil.relativedelta import relativedelta
 
 class Device_Manager:
     '''
@@ -83,7 +82,7 @@ class Device_Manager:
         device_count_by_warranty_expiration = {}  
 
         today_date = datetime.today() 
-        year_from_today = today_date + relativedelta(years=1)
+        year_from_today =  today_date.replace(year=today_date.year + 1) 
 
         for device in devices_col:
             if not device.warranty_expiration_date or device.warranty_expiration_date == "":
