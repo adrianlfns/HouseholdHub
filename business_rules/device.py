@@ -40,9 +40,18 @@ class Device (EntityBase):
         if not self.warranty_expiration_date or self.warranty_expiration_date =='':
             return empty_value       
  
-        date = datetime.strptime(self.warranty_expiration_date,'%Y-%m-%d')      
+        date = self.warranty_expiration_date_to_datetime # datetime.strptime(self.warranty_expiration_date,'%Y-%m-%d')      
         
         return date.strftime("%A %B %d %Y")
+    
+    @property
+    def warranty_expiration_date_to_datetime(self):
+        '''
+        converts warranty_expiration_date to datetime
+        '''
+        return datetime.strptime(self.warranty_expiration_date,'%Y-%m-%d')  
+    
+
         
 
 

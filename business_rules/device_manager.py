@@ -1,6 +1,7 @@
 from business_rules.device import Device
 from business_rules.entity_base import EntityBase
 from business_rules.category_count import CategoryCount
+from business_rules.expiration_types_lookup import ExpirationTypeLookup
 import json
 import os
 from datetime import datetime
@@ -9,11 +10,6 @@ class Device_Manager:
     '''
     Class that manage the data access and business logic for devices.
     '''
-
-    WARRANTY_EXPIRATION_STATUS_EXPIRED = 1    
-    WARRANTY_EXPIRATION_STATUS_EXPIRES_YEAR = 2
-    WARRANTY_EXPIRATION_STATUS_EXPIRES_YEAR_PLUS = 3
-    WARRANTY_EXPIRATION_STATUS_EXPIRES_UNKNOWN = 4
 
     DEVICE_FILE_PATH = os.path.join('db','devices.json') #"db/devices.json"  'constant' to know the path where the data for the device is located'
 
@@ -53,6 +49,7 @@ class Device_Manager:
 
         return list(filter(lambda x: x.category_id == category_id, devices_col))
     
+    
 
     @staticmethod
     def get_device_count_by_categories(devices_col:list = None):
@@ -86,26 +83,20 @@ class Device_Manager:
 
         for device in devices_col:
             if not device.warranty_expiration_date or device.warranty_expiration_date == "":
-                device_count_by_warranty_expiration[Device_Manager.WARRANTY_EXPIRATION_STATUS_EXPIRES_UNKNOWN] = device_count_by_warranty_expiration.get(Device_Manager.WARRANTY_EXPIRATION_STATUS_EXPIRES_UNKNOWN,0) + 1
+                device_count_by_warranty_expiration[ExpirationTypeLookup.WARRANTY_EXPIRATION_STATUS_EXPIRES_UNKNOWN] = device_count_by_warranty_expiration.get(ExpirationTypeLookup.WARRANTY_EXPIRATION_STATUS_EXPIRES_UNKNOWN,0) + 1
             else:
                 expiration_date = datetime.strptime(device.warranty_expiration_date,'%Y-%m-%d')
                                
                 if expiration_date <= today_date:
-                    device_count_by_warranty_expiration[Device_Manager.WARRANTY_EXPIRATION_STATUS_EXPIRED] = device_count_by_warranty_expiration.get(Device_Manager.WARRANTY_EXPIRATION_STATUS_EXPIRED,0) + 1
+                    device_count_by_warranty_expiration[ExpirationTypeLookup.WARRANTY_EXPIRATION_STATUS_EXPIRED] = device_count_by_warranty_expiration.get(ExpirationTypeLookup.WARRANTY_EXPIRATION_STATUS_EXPIRED,0) + 1
                 else:                 
                     if (expiration_date <= year_from_today):
-                        device_count_by_warranty_expiration[Device_Manager.WARRANTY_EXPIRATION_STATUS_EXPIRES_YEAR] = device_count_by_warranty_expiration.get(Device_Manager.WARRANTY_EXPIRATION_STATUS_EXPIRES_YEAR,0) + 1
+                        device_count_by_warranty_expiration[ExpirationTypeLookup.WARRANTY_EXPIRATION_STATUS_EXPIRES_YEAR] = device_count_by_warranty_expiration.get(ExpirationTypeLookup.WARRANTY_EXPIRATION_STATUS_EXPIRES_YEAR,0) + 1
                     else:
-                        device_count_by_warranty_expiration[Device_Manager.WARRANTY_EXPIRATION_STATUS_EXPIRES_YEAR_PLUS] = device_count_by_warranty_expiration.get(Device_Manager.WARRANTY_EXPIRATION_STATUS_EXPIRES_YEAR_PLUS,0) + 1
+                        device_count_by_warranty_expiration[ExpirationTypeLookup.WARRANTY_EXPIRATION_STATUS_EXPIRES_YEAR_PLUS] = device_count_by_warranty_expiration.get(ExpirationTypeLookup.WARRANTY_EXPIRATION_STATUS_EXPIRES_YEAR_PLUS,0) + 1
 
         return device_count_by_warranty_expiration
-
-
-
-           
-
-    
-
+         
 
     @staticmethod
     def get_new_device_key(devices_col = None):
@@ -227,3 +218,43 @@ class Device_Manager:
         
         return True, '', ''
     
+    @staticmethod
+    def device_filter(device: Device, category_id: int, device_name: str, expiration_type_id: int):
+        '''
+        Helper function to filter devices given certain parameters
+        ''' 
+
+        #category ID filter
+        if category_id > 0 and device.category_id != category_id:
+            return False
+        
+        #device name portion filter
+        if device_name != '' and device_name not in device.device_name.upper():
+            return False      
+
+        #from here on starts the warranty expiration filter
+        if expiration_type_id == 0:
+            return True
+        
+        if expiration_type_id == ExpirationTypeLookup.WARRANTY_EXPIRATION_STATUS_EXPIRES_UNKNOWN:
+            return device.warranty_expiration_date == '' 
+        
+        #at this point, empty expiration dates do not apply
+        if device.warranty_expiration_date == '':
+            return False
+        
+        today_date = datetime.today()
+        expiration_date = device.warranty_expiration_date_to_datetime
+
+        if expiration_type_id == ExpirationTypeLookup.WARRANTY_EXPIRATION_STATUS_EXPIRED:
+            return expiration_date <= today_date
+
+        year_from_today = today_date.replace(year=today_date.year + 1)
+
+        if expiration_type_id == ExpirationTypeLookup.WARRANTY_EXPIRATION_STATUS_EXPIRES_YEAR:
+            return  expiration_date <= year_from_today
+        
+        if expiration_type_id == ExpirationTypeLookup.WARRANTY_EXPIRATION_STATUS_EXPIRES_YEAR_PLUS:
+            return  expiration_date > year_from_today        
+        
+        return True

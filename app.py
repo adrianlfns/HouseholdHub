@@ -9,6 +9,8 @@ from business_rules.device import Device
 from business_rules.categories_manager import Categories_Manager
 from business_rules.category import Category
 
+from business_rules.expiration_types_lookup import ExpirationTypeLookup
+
 app = flask.Flask(__name__, static_url_path='/static')
 app.secret_key = '192b9bdd22ab9ed4d12e236c78afcb9a393ec15f71bbf5dc987d54727823bcb1'
 
@@ -159,11 +161,15 @@ def my_devices():
     categories_col = Categories_Manager.get_all_categories()
     set_category_to_devices(devices_col, categories_col=categories_col)
 
+    #load expiration types
+    expiration_type_col = ExpirationTypeLookup.get_all_expiration_types()
+
     #render the template
     return flask.render_template('my_devices.html',
                                  devices_col=devices_col, 
                                  categories_col=categories_col,
-                                 selected_category_id=selected_category_id) #see templates directory for corresponding template
+                                 selected_category_id=selected_category_id,
+                                 expiration_type_col=expiration_type_col) #see templates directory for corresponding template
 
 @app.get("/search_device")
 def search_device():
@@ -177,7 +183,13 @@ def search_device():
     category_id = flask.request.args.get('category_id',0)
     if not category_id or category_id == '':
         category_id = 0
-    category_id = int(category_id)  
+    category_id = int(category_id) 
+
+    #prepare the expiration type
+    expiration_type_id = flask.request.args.get('expiration_type_id',0) 
+    if  not expiration_type_id or expiration_type_id == '':
+        expiration_type_id = 0
+    expiration_type_id = int(expiration_type_id)
 
     #prepare the device name filter
     device_name = flask.request.args.get('device_name','')
@@ -186,10 +198,17 @@ def search_device():
     device_name = device_name.strip().upper()
     
     #filter the device
-    devices_col = list(filter(lambda x: (category_id <= 0 or x.category_id == category_id) and (device_name == '' or device_name in x.device_name.upper()), devices_col))
+    devices_col = list(
+        filter( lambda x: Device_Manager.device_filter(x, category_id, device_name,expiration_type_id), 
+               devices_col)
+                       )
+   
+
     set_category_to_devices(devices_col)
     
     return flask.render_template('devices_col.html',devices_col=devices_col) #see templates directory for corresponding template
+
+
 
 
 def set_category_to_devices(devices_col, categories_col = None):

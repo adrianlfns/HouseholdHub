@@ -26,13 +26,21 @@
       <div class="card-body">
         <div class="d-flex flex-row-reverse gap-1">
           <select class="form-control form-control-sm" 
+               id="expirationTypes"
+               onchange="find_device()" >
+              <option value="">Any expiration</option>
+              {% for expiration_type in expiration_type_col %} 
+                <option value="{{expiration_type.id}}">{{expiration_type.description}}</option>
+              {% endfor %}             
+          </select> 
+          <select class="form-control form-control-sm" 
                id="category"
                onchange="find_device()" >
-              <option value="">All Categories</option>
+              <option value="">Any Categories</option>
               {% for category in categories_col %} 
                 <option value="{{category.id}}"  {% if category.id == selected_category_id%}selected{% endif %}>{{category.category_name}}</option>
               {% endfor %}             
-          </select>        
+          </select>
           <input type="text" autocomplete="off" class="form-control form-control-sm auto_complete" placeholder="Filter device" 
                 id="device_name" onkeyup="find_device()">
         </div>         
@@ -73,9 +81,10 @@
  
   function find_device()
   {  
-    let dev_name_input = document.getElementById('device_name')
-    let category = document.getElementById('category')
-    $.get('/search_device?device_name=' + dev_name_input.value + '&category_id=' + category.value, function(data){
+    const dev_name_input = document.getElementById('device_name')
+    const category = document.getElementById('category')
+    const expirationTypes = document.getElementById('expirationTypes')
+    $.get('/search_device?device_name=' + dev_name_input.value + '&category_id=' + category.value + '&expiration_type_id=' + expirationTypes.value, function(data){
       document.getElementById('content').innerHTML = data
       refresh_on_submit();
     });
