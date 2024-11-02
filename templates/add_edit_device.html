@@ -155,40 +155,69 @@
 
 <script type="text/javascript">
 
+    const input_prefix_document_name = "document_name_";
+    const input_prefix_document_url = "document_url_";
+    const input_prefix_document_upload = "document_upload_";
+    var id;
+
+    function setup_document_name_input(modal_body_content,id){
+
+        const div = document.createElement("div")
+        div.setAttribute("class", "col-sm-12");  
+        modal_body_content.appendChild(div);
+
+        const oInputText = document.createElement("INPUT")
+        oInputText.setAttribute("type", "text");
+        oInputText.setAttribute("class", "form-control");  
+        oInputText.setAttribute("placeholder", "Document Name"); 
+        oInputText.setAttribute("autocomplete", "off"); 
+        oInputText.setAttribute("id", input_prefix_document_name + id); 
+        oInputText.setAttribute("name", input_prefix_document_name + id); 
+        div.appendChild(oInputText)
+    }
+
+    function setup_document_URL_input(modal_body_content,id){
+        const div = document.createElement("div")
+        div.setAttribute("class", "col-sm-12 mt-2");  
+        modal_body_content.appendChild(div); 
+
+        const oInputText = document.createElement("INPUT")
+        oInputText.setAttribute("type", "url");
+        oInputText.setAttribute("class", "form-control");  
+        oInputText.setAttribute("placeholder", "Document URL"); 
+        oInputText.setAttribute("autocomplete", "off"); 
+        oInputText.setAttribute("id", input_prefix_document_url + id); 
+        oInputText.setAttribute("name", input_prefix_document_url + id); 
+        div.appendChild(oInputText);
+    }
+
+    function setup_document_upload_input(modal_body_content,id){
+        const div = document.createElement("div")
+        div.setAttribute("class", "col-sm-12 mt-2");  
+        modal_body_content.appendChild(div); 
+
+        const oInputText = document.createElement("INPUT")
+        oInputText.setAttribute("type", "file");
+        oInputText.setAttribute("class", "form-control");  
+        oInputText.setAttribute("placeholder", "Upload File"); 
+        oInputText.setAttribute("autocomplete", "off"); 
+        oInputText.setAttribute("id", input_prefix_document_upload + id); 
+        oInputText.setAttribute("name", input_prefix_document_upload + id); 
+        div.appendChild(oInputText); 
+    }
+
     function add_warranty_doc(){
 
-        document.getElementById("modal_tile").innerText = "Add Warranty Document"
+        id = 'warranty_' +  self.crypto.randomUUID();
 
+        document.getElementById("modal_tile").innerText = "Add Warranty Document";
         
         const modal_body_content = document.getElementById("modal_body_content");
         modal_body_content.innerHTML = '';
 
-        var div = document.createElement("div")
-        div.setAttribute("class", "col-sm-12");  
-        modal_body_content.appendChild(div);
-        var oInputText = document.createElement("INPUT")
-        oInputText.setAttribute("type", "text");
-        oInputText.setAttribute("class", "form-control");  
-        oInputText.setAttribute("placeholder", "Document Name"); 
-        div.appendChild(oInputText)
-        
-        div = document.createElement("div")
-        div.setAttribute("class", "col-sm-12 mt-2");  
-        modal_body_content.appendChild(div); 
-        oInputText = document.createElement("INPUT")
-        oInputText.setAttribute("type", "url");
-        oInputText.setAttribute("class", "form-control");  
-        oInputText.setAttribute("placeholder", "Document URL"); 
-        div.appendChild(oInputText);
-
-        div = document.createElement("div")
-        div.setAttribute("class", "col-sm-12 mt-2");  
-        modal_body_content.appendChild(div); 
-        oInputText = document.createElement("INPUT")
-        oInputText.setAttribute("type", "file");
-        oInputText.setAttribute("class", "form-control");  
-        oInputText.setAttribute("placeholder", "Upload File"); 
-        div.appendChild(oInputText); 
+        setup_document_name_input(modal_body_content,id);
+        setup_document_URL_input(modal_body_content,id);
+        setup_document_upload_input(modal_body_content,id);       
 
         document.getElementById("save_doc").removeEventListener('click',this.Save_Warranty_Doc);
         document.getElementById("save_doc").addEventListener('click',this.Save_Warranty_Doc );
@@ -196,6 +225,39 @@
     }
 
     function Save_Warranty_Doc() {
+        if(!ValidateWarranty()) return;
+
+    }
+
+    function ValidateWarranty(){
+
+        //document name is required
+        const document_name = document.getElementById(input_prefix_document_name+id);
+        document_name.className = document_name.className.replace('is-invalid','').trim();
+
+        if(document_name.value == ''){
+            document_name.className = document_name.className + ' is-invalid';
+            document_name.focus();
+            alert("Document name is required.");
+            return false;
+        }
+
+        //document URL or File is required.
+        const document_url = document.getElementById(input_prefix_document_url+id);
+        const document_upload = document.getElementById(input_prefix_document_upload+id);
+
+        document_url.className = document_url.className.replace('is-invalid','').trim();
+        document_upload.className = document_upload.className.replace('is-invalid','').trim();
+
+        if(document_url.value == '' && document_upload.value  == ''){
+            document_url.className = document_url.className + ' is-invalid';
+            document_upload.className = document_upload.className + ' is-invalid';
+            document_url.focus();
+            alert("Document url or File are required");
+            return false;
+        }
+
+        return true;
     }
   
 
