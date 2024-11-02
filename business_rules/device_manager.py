@@ -219,9 +219,26 @@ class Device_Manager:
         return True, '', ''
     
     @staticmethod
+    def query_devices(devices_col = None, category_id: int = 0, device_name: str = '', expiration_type_id: int = 0):
+        '''
+        This function returns a collection of devices that meet certain criteria such as the category ID
+        Returns a list with the filtered devices
+        '''
+        if not devices_col:
+            devices_col = Device_Manager.get_all_devices()
+
+        return list(
+        filter( lambda x: Device_Manager.device_filter(x, category_id, device_name,expiration_type_id), 
+               devices_col)
+                       )
+
+
+    @staticmethod
     def device_filter(device: Device, category_id: int, device_name: str, expiration_type_id: int):
         '''
         Helper function to filter devices given certain parameters
+        Returns True if the parameter criteria
+        Returns False if the device does not meets the criteria
         ''' 
 
         #category ID filter
@@ -229,7 +246,7 @@ class Device_Manager:
             return False
         
         #device name portion filter
-        if device_name != '' and device_name not in device.device_name.upper():
+        if device_name != '' and device_name.upper() not in device.device_name.upper():
             return False      
 
         #from here on starts the warranty expiration filter

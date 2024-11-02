@@ -157,10 +157,8 @@ def my_devices():
         expiration_type_id = 0
 
     #filter the device
-    devices_col = list(
-        filter( lambda x: Device_Manager.device_filter(x, category_id=selected_category_id, device_name="",expiration_type_id=expiration_type_id), 
-               Device_Manager.get_all_devices())
-                       )
+    devices_col = Device_Manager.query_devices(category_id=selected_category_id, expiration_type_id=expiration_type_id)
+
 
     #set the category name to the devices that will be rendered
     categories_col = Categories_Manager.get_all_categories()
@@ -181,8 +179,7 @@ def search_device():
     '''
      This route is suitable to make asynchronous AJAX requests. 
      It allows filtering devices by category and by a portion of the name.
-    '''
-    devices_col = Device_Manager.get_all_devices()
+    '''   
 
     #prepare the category filter
     category_id = flask.request.args.get('category_id',0)
@@ -200,14 +197,10 @@ def search_device():
     device_name = flask.request.args.get('device_name','')
     if not device_name:
         device_name = ''
-    device_name = device_name.strip().upper()
+    device_name = device_name.strip()
     
     #filter the device
-    devices_col = list(
-        filter( lambda x: Device_Manager.device_filter(x, category_id, device_name,expiration_type_id), 
-               devices_col)
-                       )
-   
+    devices_col = Device_Manager.query_devices(category_id=category_id, expiration_type_id=expiration_type_id, device_name=device_name) 
 
     set_category_to_devices(devices_col)
     
