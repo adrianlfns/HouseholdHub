@@ -231,6 +231,7 @@ class Device_Manager:
         if not devices_col:
             devices_col = Device_Manager.get_all_devices()
 
+
         return list(
         filter( lambda x: Device_Manager.device_filter(device=x, category_id= category_id, device_name= device_name,  expiration_type_id=expiration_type_id), 
                devices_col)

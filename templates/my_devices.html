@@ -24,7 +24,7 @@
                onchange="find_device()" >
               <option value="">Any Warranty expiration</option>
               {% for expiration_type in expiration_type_col %} 
-                <option value="{{expiration_type.id}}">{{expiration_type.description}}</option>
+                <option value="{{expiration_type.id}}"    {% if expiration_type.id == expiration_type_id%}selected{% endif %}>{{expiration_type.description}}</option>
               {% endfor %}             
           </select> 
           <select class="form-control form-control-sm" 

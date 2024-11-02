@@ -148,13 +148,17 @@ def my_devices():
     try:
         selected_category_id = int(flask.request.args.get("category_id",0))
     except:
-        selected_category_id = 0
+        return flask.render_template('invalid_request.html'), 400
 
     #capture and clean up the expiration type parameter
     try:
         expiration_type_id = int(flask.request.args.get("expiration_type_id",0))
     except:
-        expiration_type_id = 0
+        return flask.render_template('invalid_request.html'), 400
+    
+    if not ExpirationTypeLookup.IsValidExpirationTypeID(expiration_type_id):
+        return flask.render_template('invalid_request.html'), 400
+
 
     #filter the device
     devices_col = Device_Manager.query_devices(category_id=selected_category_id, expiration_type_id=expiration_type_id)
@@ -172,7 +176,8 @@ def my_devices():
                                  devices_col=devices_col, 
                                  categories_col=categories_col,
                                  selected_category_id=selected_category_id,
-                                 expiration_type_col=expiration_type_col) #see templates directory for corresponding template
+                                 expiration_type_col=expiration_type_col,
+                                 expiration_type_id=expiration_type_id) #see templates directory for corresponding template
 
 @app.get("/search_device")
 def search_device():
