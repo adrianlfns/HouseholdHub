@@ -47,10 +47,13 @@ class Device_Manager:
         if not devices_col:
             devices_col = Device_Manager.get_all_devices()
 
-        return list(filter(lambda x: x.category_id == category_id, devices_col))
+        #method 1 - using filter
+        #return list(filter(lambda x: x.category_id == category_id, devices_col))
+        
+        #method 2 - using list comprehension
+        return [x for x in devices_col if x.category_id == category_id]
     
-    
-
+      
     @staticmethod
     def get_device_count_by_categories(devices_col:list = None):
         """
@@ -222,13 +225,14 @@ class Device_Manager:
     def query_devices(devices_col = None, category_id: int = 0, device_name: str = '', expiration_type_id: int = 0):
         '''
         This function returns a collection of devices that meet certain criteria such as the category ID
+        All the criteria is optional. Passing no criteria simply returns all devices.
         Returns a list with the filtered devices
         '''
         if not devices_col:
             devices_col = Device_Manager.get_all_devices()
 
         return list(
-        filter( lambda x: Device_Manager.device_filter(x, category_id, device_name,expiration_type_id), 
+        filter( lambda x: Device_Manager.device_filter(device=x, category_id= category_id, device_name= device_name,  expiration_type_id=expiration_type_id), 
                devices_col)
                        )
 
@@ -236,8 +240,9 @@ class Device_Manager:
     @staticmethod
     def device_filter(device: Device, category_id: int, device_name: str, expiration_type_id: int):
         '''
-        Helper function to filter devices given certain parameters
-        Returns True if the parameter criteria
+        Helper function to filter devices given certain parameters. 
+        This function is used on the function query_devices
+        Returns True if the parameters passed meets the criteria.
         Returns False if the device does not meets the criteria
         ''' 
 

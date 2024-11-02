@@ -32,4 +32,5 @@
     * business_rules/category.py -In the module category.py, you will find the class Category which represents the information of a single category.
     * business_rules/categories_manager.py - In the module categories_manager, you will find a class Categories_Manager that handles all the data access logic for a category: (Create, Update, Delete, List, Find ,etc)
     * business_rules/category_count.py - In this module, there is a class named CategoryCount that is using for holding statistics about categories. For now it only holds the category name/ category id and the device count that is under a category. 
+    * business_rules/expiration_types_lookup.py - In this module we can find a class named ExpirationTypeLookup that defines the IDs fo the possible device expiration types. It also exposes functionality that can be done with the possible expiration types. 
 
