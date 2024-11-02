@@ -29,22 +29,22 @@
             <ul class="list-group list-group-flush">  
                 
                 <li class="list-group-item text-danger">
-                    <a href="" class="text-danger" style="display:block;  text-decoration: none;">
+                    <a href="my_devices?expiration_type_id=1" class="text-danger" style="display:block;  text-decoration: none;">
                        Warranty Expired <span class="badge text-bg-danger">{{device_count_by_expiration_category.get(1,0)}} device(s)</span>            
                     </a> 
                   </li>
                   <li class="list-group-item">
-                    <a href="" style="display:block;  text-decoration: none;">
+                    <a href="my_devices?expiration_type_id=2" style="display:block;  text-decoration: none;">
                         Expires in a year or less <span class="badge text-bg-primary">{{device_count_by_expiration_category.get(2,0)}} device(s)</span>            
                     </a> 
                   </li>
                   <li class="list-group-item">
-                    <a href="" style="display:block;  text-decoration: none;">
+                    <a href="my_devices?expiration_type_id=3" style="display:block;  text-decoration: none;">
                         In more than a year <span class="badge text-bg-primary">{{device_count_by_expiration_category.get(3,0)}} device(s)</span>            
                     </a> 
                   </li>
                   <li class="list-group-item text-dark">
-                    <a href="" class="text-dark" style="display:block;  text-decoration: none;">
+                    <a href="my_devices?expiration_type_id=4" class="text-dark" style="display:block;  text-decoration: none;">
                         Unknown Expiration <span class="badge text-bg-dark">{{device_count_by_expiration_category.get(4,0)}} device(s)</span>            
                     </a> 
                   </li>

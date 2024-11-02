@@ -30,6 +30,7 @@ def home():
         category = Categories_Manager.get_category_by_id(category_id=device_count_by_cat.category_id, categories_col=categories_col)
         if category:
             device_count_by_cat.category_name = category.category_name 
+            
     #Dashboard section 2 - device count by expiration date
     device_count_by_expiration_category = Device_Manager.get_device_count_by_warranty_expiration()
 
@@ -144,18 +145,22 @@ def my_devices():
     '''
 
     #capture and clean up the category_id parameter
-    selected_category_id = flask.request.args.get("category_id",0) 
-    if selected_category_id != 0:
-        try:
-            selected_category_id = int(selected_category_id)
-        except:
-            selected_category_id = 0
+    try:
+        selected_category_id = int(flask.request.args.get("category_id",0))
+    except:
+        selected_category_id = 0
 
-    devices_col = Device_Manager.get_all_devices()
+    #capture and clean up the expiration type parameter
+    try:
+        expiration_type_id = int(flask.request.args.get("expiration_type_id",0))
+    except:
+        expiration_type_id = 0
 
-    if selected_category_id > 0:
-        #if selected category has a value. Filter out by that category value
-        devices_col = [i for i in devices_col if i.category_id == selected_category_id] 
+    #filter the device
+    devices_col = list(
+        filter( lambda x: Device_Manager.device_filter(x, category_id=selected_category_id, device_name="",expiration_type_id=expiration_type_id), 
+               Device_Manager.get_all_devices())
+                       )
 
     #set the category name to the devices that will be rendered
     categories_col = Categories_Manager.get_all_categories()

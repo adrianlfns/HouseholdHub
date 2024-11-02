@@ -14,12 +14,6 @@
   {% endif %}
 {% endwith %}
 
-{% if not devices_col %}
-  <div class="p-3 mb-2 text-info border border-info-subtle rounded-3">
-    There are no devices
-  </div>
-{% endif %}
-
 <div class="row mt-2 mb-2">
   <div class="col">
     <div class="card" style="width: 100%;">
@@ -54,7 +48,7 @@
 
 
 <div class="row" id="content"> 
-    {% include 'devices_col.html' %}  
+  {% include 'devices_col.html' %}  
   </div>
 </div>
 
