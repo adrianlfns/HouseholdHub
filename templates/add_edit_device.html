@@ -77,6 +77,45 @@
             {{forms.texarea(id='warranty_notes',name='warranty_notes', data=data, invalid_input_name=invalid_input_name) }}
         </div>
     </div> 
+    <div class="row">
+        <div class="col-sm-4 mt-2">
+            <div class="card">
+                <div class="card-header">
+                    Warranty Documents
+                </div>
+                <div class="card-body">
+
+                    <div class="d-flex flex-row-reverse">
+                        <button type="button" id="add_waranty_doc" onclick="add_warranty_doc()" class="btn btn-primary btn-sm right"><i class="bi bi-plus-circle"></i> Add</button>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4 mt-2">
+            <div class="card">
+                <div class="card-header">
+                    Purchase Receipts
+                </div>
+                <div class="card-body">
+                    <div class="d-flex flex-row-reverse">
+                        <button type="button" class="btn btn-primary btn-sm right"><i class="bi bi-plus-circle"></i> Add</button>
+                    </div>  
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4 mt-2">
+            <div class="card">
+                <div class="card-header">
+                    Manuals
+                </div>
+                <div class="card-body">
+                    <div class="d-flex flex-row-reverse">
+                        <button type="button" class="btn btn-primary btn-sm right"><i class="bi bi-plus-circle"></i> Add</button>
+                    </div>  
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row mt-2">
         <div class="col d-flex flex-row-reverse">
             <div class="p-1">
@@ -88,7 +127,78 @@
         </div>       
     </div>
     {{forms.input(id='id',name='id',type='hidden', data=data) }}
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="upload_documents" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="modal_tile">Modal title</h5>          
+        </div>
+        <div class="modal-body">
+          <div class="row" id="modal_body_content">
+
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary btn-sm" id="save_doc">Save</button>
+          <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>          
+        </div>
+      </div>
+    </div>
+  </div>
+
+
 </form>
 
+<script type="text/javascript">
 
+    function add_warranty_doc(){
+
+        document.getElementById("modal_tile").innerText = "Add Warranty Document"
+
+        
+        const modal_body_content = document.getElementById("modal_body_content");
+        modal_body_content.innerHTML = '';
+
+        var div = document.createElement("div")
+        div.setAttribute("class", "col-sm-12");  
+        modal_body_content.appendChild(div);
+        var oInputText = document.createElement("INPUT")
+        oInputText.setAttribute("type", "text");
+        oInputText.setAttribute("class", "form-control");  
+        oInputText.setAttribute("placeholder", "Document Name"); 
+        div.appendChild(oInputText)
+        
+        div = document.createElement("div")
+        div.setAttribute("class", "col-sm-12 mt-2");  
+        modal_body_content.appendChild(div); 
+        oInputText = document.createElement("INPUT")
+        oInputText.setAttribute("type", "url");
+        oInputText.setAttribute("class", "form-control");  
+        oInputText.setAttribute("placeholder", "Document URL"); 
+        div.appendChild(oInputText);
+
+        div = document.createElement("div")
+        div.setAttribute("class", "col-sm-12 mt-2");  
+        modal_body_content.appendChild(div); 
+        oInputText = document.createElement("INPUT")
+        oInputText.setAttribute("type", "file");
+        oInputText.setAttribute("class", "form-control");  
+        oInputText.setAttribute("placeholder", "Upload File"); 
+        div.appendChild(oInputText); 
+
+        document.getElementById("save_doc").removeEventListener('click',this.Save_Warranty_Doc);
+        document.getElementById("save_doc").addEventListener('click',this.Save_Warranty_Doc );
+        $('#upload_documents').modal('show');
+    }
+
+    function Save_Warranty_Doc() {
+    }
+  
+
+
+</script>
 {% endblock %}

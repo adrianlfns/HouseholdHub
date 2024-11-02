@@ -51,11 +51,6 @@ class Device (EntityBase):
         '''
         return datetime.strptime(self.warranty_expiration_date,'%Y-%m-%d')  
     
-
-        
-
-
-
     def update_from_dictionary(self, dict:dict):
         '''
         update all the properties from a dictionary
