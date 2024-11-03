@@ -16,7 +16,7 @@
 </div>
 {% endif %}
 
-<form method="post" action="\add_edit_device" > 
+<form method="post" action="\add_edit_device" enctype=multipart/form-data> 
 
     <div class="row">
         <div class="col-sm">
@@ -84,8 +84,14 @@
                     Warranty Documents
                 </div>
                 <div class="card-body">
-
-                    <div class="d-flex flex-row-reverse">
+                    <ul id="warranty_list" class="list-group">
+                        <li class="list-group-item">An item</li>
+                        <li class="list-group-item">A second item</li>
+                        <li class="list-group-item">A third item</li>
+                        <li class="list-group-item">A fourth item</li>
+                        <li class="list-group-item">And a fifth one</li>
+                    </ul>
+                    <div class="d-flex flex-row-reverse mt-2">
                         <button type="button" id="add_waranty_doc" onclick="add_warranty_doc()" class="btn btn-primary btn-sm right"><i class="bi bi-plus-circle"></i> Add</button>
                     </div>                    
                 </div>
@@ -155,10 +161,28 @@
 
 <script type="text/javascript">
 
+
+
     const input_prefix_document_name = "document_name_";
     const input_prefix_document_url = "document_url_";
     const input_prefix_document_upload = "document_upload_";
     var id;
+
+    function isValidUrl(string) {
+        try {
+          new URL(string);
+          return true;
+        } catch (err) {
+          return false;
+        }
+      }
+
+    function get_new_id() {
+        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+          var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+          return v.toString(16);
+        }) + '_' + Date.now(); 
+      }
 
     function setup_document_name_input(modal_body_content,id){
 
@@ -206,9 +230,10 @@
         div.appendChild(oInputText); 
     }
 
+
     function add_warranty_doc(){
 
-        id = 'warranty_' +  self.crypto.randomUUID();
+        id = 'warranty_' + get_new_id();
 
         document.getElementById("modal_tile").innerText = "Add Warranty Document";
         
@@ -227,6 +252,22 @@
     function Save_Warranty_Doc() {
         if(!ValidateWarranty()) return;
 
+        const document_name = document.getElementById(input_prefix_document_name+id);
+        const document_url = document.getElementById(input_prefix_document_url+id);
+        const document_upload = document.getElementById(input_prefix_document_upload+id);
+
+        const warranty_list = document.getElementById("warranty_list");
+        const oLiElement = document.createElement("li")
+        oLiElement.setAttribute("class", "list-group-item");
+        oLiElement.append(document_name.value)
+        warranty_list.appendChild(oLiElement);
+        warranty_list.appendChild(document_name);
+        warranty_list.appendChild(document_url);
+        warranty_list.appendChild(document_upload);
+        document_name.hidden = true;
+        document_url.hidden = true;
+        document_upload.hidden = true;
+        $('#upload_documents').modal('hide');
     }
 
     function ValidateWarranty(){
@@ -235,6 +276,7 @@
         const document_name = document.getElementById(input_prefix_document_name+id);
         document_name.className = document_name.className.replace('is-invalid','').trim();
 
+        
         if(document_name.value == ''){
             document_name.className = document_name.className + ' is-invalid';
             document_name.focus();
@@ -247,13 +289,19 @@
         const document_upload = document.getElementById(input_prefix_document_upload+id);
 
         document_url.className = document_url.className.replace('is-invalid','').trim();
-        document_upload.className = document_upload.className.replace('is-invalid','').trim();
+        document_upload.className = document_upload.className.replace('is-invalid','').trim();       
 
         if(document_url.value == '' && document_upload.value  == ''){
             document_url.className = document_url.className + ' is-invalid';
             document_upload.className = document_upload.className + ' is-invalid';
             document_url.focus();
             alert("Document url or File are required");
+            return false;
+        }
+
+        if(document_url.value != '' && !isValidUrl(document_url.value)){
+            document_url.className = document_url.className + ' is-invalid';
+            alert("URL is invalid");
             return false;
         }
 

@@ -3,6 +3,7 @@ For flask documentation see https://flask.palletsprojects.com/en/3.0.x/
 '''
 
 import flask 
+import os
 from business_rules.device_manager import Device_Manager #imports a package from the module device_manager, the class Device_Manager is used for every data access with the device.
 from business_rules.device import Device
 
@@ -285,11 +286,52 @@ def remove_device():
     return flask.redirect("/my_devices")
    
 
+def process_post_data_dictionary(post_data_collected:dict):
+    '''
+    Process and transform POST variables related to document 
+    '''
+    #get all keys related to documents
+    document_related_keys = [i.replace("document_name_","") for i in post_data_collected.keys() if i.startswith("document_name_")]
+    for key in document_related_keys:
+        document_name = post_data_collected.get("document_name_" + key,'')
+        document_url = post_data_collected.get("document_url_" + key,'')
+
+        file_name_key = 'document_upload_' + key
+        if file_name_key not in flask.request.files:
+            raise Exception(f"File content expected to appear in the request. Expected content for file {file_name_key}")  
+        file = flask.request.files[file_name_key]
+
+        file_split = os.path.splitext(file.filename)
+        file_ext = file_split[1]
+        if not file_ext:
+            file_ext = ''
+
+        
+        warranty_dir = os.path.join('db','docs')        
+
+        if not os.path.isdir(warranty_dir):
+            os.mkdir(warranty_dir)
+
+        file.save(os.path.join(warranty_dir,file_name_key + file_ext))
+
+        #prepare the dictionary here
+
+       
+
+
+
+
+
+
+
+
+
 
 @app.post("/add_edit_device")
 def add_edit_device_post():
     '''
-    POST route for receiving device information
+    POST route for receiving device information.
+    This is executed when a new device is added or edited
     '''
     #collect the post data in a dictionary (uses dictionary comprehension)
     post_data_collected = {k:flask.request.form.get(k) for k in flask.request.form}  
@@ -300,6 +342,9 @@ def add_edit_device_post():
         categories_col = Categories_Manager.get_all_categories()
         return flask.render_template('add_edit_device.html', data=post_data_collected, validation_error=validation_error, invalid_input_name=invalid_input_name, categories_col=categories_col)
    
+    #process documents
+    process_post_data_dictionary(post_data_collected)
+  
 
     #create a device object
     device = Device()
