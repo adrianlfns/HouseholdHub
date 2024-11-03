@@ -291,30 +291,55 @@ def process_post_data_dictionary(post_data_collected:dict):
     Process and transform POST variables related to document 
     '''
     #get all keys related to documents
-    document_related_keys = [i.replace("document_name_","") for i in post_data_collected.keys() if i.startswith("document_name_")]
+    document_related_keys = [i.replace("document_name_warranty_","") for i in post_data_collected.keys() if i.startswith("document_name_warranty_")]
     for key in document_related_keys:
-        document_name = post_data_collected.get("document_name_" + key,'')
-        document_url = post_data_collected.get("document_url_" + key,'')
 
-        file_name_key = 'document_upload_' + key
+        doc_name_dict_key = "document_name_warranty_" + key
+        doc_url_dict_key = "document_url_warranty_" + key
+
+        document_name = post_data_collected.get(doc_name_dict_key,'')
+        document_url = post_data_collected.get(doc_url_dict_key,'')
+
+        #validate that the file comes in the post
+        file_name_key = 'document_upload_warranty_' + key
         if file_name_key not in flask.request.files:
             raise Exception(f"File content expected to appear in the request. Expected content for file {file_name_key}")  
         file = flask.request.files[file_name_key]
 
+        #obtain the file extension
         file_split = os.path.splitext(file.filename)
         file_ext = file_split[1]
         if not file_ext:
             file_ext = ''
-
         
+        #create the docs storage directory if needed
         warranty_dir = os.path.join('db','docs')        
-
         if not os.path.isdir(warranty_dir):
             os.mkdir(warranty_dir)
+    
+        #store the file in db/docs/
+        file_name_key = file_name_key + file_ext
+        file.save(os.path.join(warranty_dir,file_name_key))
 
-        file.save(os.path.join(warranty_dir,file_name_key + file_ext))
+        #prepare the dictionary 
+        warranty_doc_list = post_data_collected.get('warranty_doc_ref',[])
+        warranty_doc_list.append({
+            'doc_ref_id':key,
+            'doc_name':document_name,
+            'doc_url':document_url,
+            'doc_file_name':file_name_key
+        })
+        post_data_collected['warranty_doc_ref'] = warranty_doc_list
 
-        #prepare the dictionary here
+        #clean up entries
+        if doc_name_dict_key in post_data_collected:
+            del post_data_collected[doc_name_dict_key]
+        
+        if doc_url_dict_key in post_data_collected:
+            del post_data_collected[doc_url_dict_key]
+        
+
+
 
        
 
@@ -343,15 +368,14 @@ def add_edit_device_post():
         return flask.render_template('add_edit_device.html', data=post_data_collected, validation_error=validation_error, invalid_input_name=invalid_input_name, categories_col=categories_col)
    
     #process documents
-    process_post_data_dictionary(post_data_collected)
-  
+    process_post_data_dictionary(post_data_collected)  
 
     #create a device object
     device = Device()
     device.update_from_dictionary(post_data_collected)
     
     #add or edit the dictionary in the storage
-    device, device_added = Device_Manager.add_edit_device(device)
+    device, device_added = Device_Manager.add_edit_device(device, warranty_docs_to_delete=post_data_collected.get('deleted_warranty_docs',''))
     
     #set a flash message for another request. In this case /my_devices will consume the flashed messages.
     if device_added:

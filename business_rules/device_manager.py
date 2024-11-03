@@ -113,7 +113,7 @@ class Device_Manager:
         
 
     @staticmethod
-    def add_edit_device(device:Device):
+    def add_edit_device(device:Device, warranty_docs_to_delete:str =''):
         '''
           Adds/Edit a device, it depends on the ID that was passed.
           Parameter: device to be added or edited.
@@ -145,6 +145,10 @@ class Device_Manager:
                 raise ValueError(f"Device with id {device.id} not found.")
             device_to_edit.update_from_device(device)
             device = device_to_edit
+            for doc_key in warranty_docs_to_delete.strip().split(','):
+                device.remove_warranty_doc_by_key(doc_key)
+        
+
 
         #stores the device
         Device_Manager.store_device_col(devices_col)

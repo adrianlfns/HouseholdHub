@@ -1,5 +1,6 @@
 from business_rules.entity_base import EntityBase
 from datetime import datetime
+import os
 
 class Device (EntityBase):
     '''
@@ -89,6 +90,10 @@ class Device (EntityBase):
         self.purchase_date = dict["purchase_date"]
         self.warranty_expiration_date = dict.get("warranty_expiration_date",'')
         self.warranty_notes = dict.get("warranty_notes",'')
+
+        warranty_doc_ref = dict.get('warranty_doc_ref',[])
+        for i in warranty_doc_ref:
+            self.warranty_doc_ref.append(i)
         
 
     def update_from_device(self, dev):
@@ -104,6 +109,22 @@ class Device (EntityBase):
         self.purchase_date = dev.purchase_date
         self.warranty_expiration_date = dev.warranty_expiration_date
         self.warranty_notes = dev.warranty_notes
+
+        for i in dev.warranty_doc_ref:
+            self.warranty_doc_ref.append(i)
+
+    def remove_warranty_doc_by_key(self,doc_key:str):
+        '''
+        Removes the warranty info from a device given the key
+        '''
+        doc_to_delete = next((e for e in self.warranty_doc_ref if e['doc_ref_id'] == doc_key), None)
+        
+        if doc_to_delete:            
+              self.warranty_doc_ref.remove(doc_to_delete)                   
+              try:
+                os.remove(os.path.join('db','docs',doc_to_delete['doc_file_name']))
+              except:
+                  pass
 
 
 
