@@ -91,9 +91,7 @@
                             <div class="flex-grow-1">
                                 {{warranty['doc_name']}}
                             </div>
-                            <div>
-                                <button type="button" onclick="delete_warranty_doc(this,'{{warranty['doc_ref_id']}}')" class="btn btn-sm btn-secondary" title="Delete" ><i class="bi bi-trash"></i></button>
-                            </div>
+                            <button type="button" onclick="delete_warranty_doc(this,'{{warranty['doc_ref_id']}}')" class="btn btn-sm btn-secondary" title="Delete" ><i class="bi bi-trash"></i></button>
                         </div>                        
                       </li>
                       {% endfor %} 
@@ -251,6 +249,7 @@
             }
         }
 
+        if (warranty_doc_ref == '') return;
         const deleted_warranty_docs = document.getElementById('deleted_warranty_docs');
         if(!deleted_warranty_docs.value || deleted_warranty_docs.value == ''){
             deleted_warranty_docs.value = warranty_doc_ref
@@ -286,9 +285,30 @@
         const document_upload = document.getElementById(input_prefix_document_upload+id);
 
         const warranty_list = document.getElementById("warranty_list");
+
         const oLiElement = document.createElement("li")
-        oLiElement.setAttribute("class", "list-group-item");
-        oLiElement.append(document_name.value)
+        oLiElement.setAttribute("class", "list-group-item");        
+
+        const oFlexElement = document.createElement("div")
+        oFlexElement.setAttribute("class", "d-flex");
+        oLiElement.append(oFlexElement);
+
+        const oNameElement = document.createElement("div");
+        oNameElement.setAttribute("class", "flex-grow-1");
+        oNameElement.innerText = document_name.value;
+        oFlexElement.append(oNameElement);
+
+        const oDeleteElement = document.createElement("button");
+        oDeleteElement.setAttribute("type",'button');
+        oDeleteElement.setAttribute("onclick", "delete_warranty_doc(this,'')");
+        oDeleteElement.setAttribute("class",'btn btn-sm btn-secondary');
+        oFlexElement.append(oDeleteElement);
+
+        const oDeleteDecor = document.createElement("i");
+        oDeleteDecor.setAttribute("class",'bi bi-trash');
+        oDeleteElement.append(oDeleteDecor);
+
+
         warranty_list.appendChild(oLiElement);
         warranty_list.appendChild(document_name);
         warranty_list.appendChild(document_url);
@@ -297,6 +317,7 @@
         document_url.hidden = true;
         document_upload.hidden = true;
         $('#upload_documents').modal('hide');
+
     }
 
     function ValidateWarranty(){
