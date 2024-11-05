@@ -8,6 +8,10 @@
     "category_name": "Computers"
   },
   {
+    "id": 9,
+    "category_name": "Gaming Devices"
+  },
+  {
     "id": 5,
     "category_name": "Google Devices"
   },
@@ -30,9 +34,5 @@
   {
     "id": 6,
     "category_name": "Tablets"
-  },
-  {
-    "id": 9,
-    "category_name": "Gaming Devices"
   }
 ]
