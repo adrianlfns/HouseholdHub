@@ -11,9 +11,14 @@
     "purchase_date": "",
     "warranty_expiration_date": "2024-12-27",
     "warranty_notes": "",
-    "manuals_doc_ref": [],
-    "purchase_receipt_doc_ref": [],
-    "warranty_doc_ref": []
+    "document_references": [
+      {
+        "doc_ref_id": "7f553ffb-09f0-4474-b70a-11de3b846003_1730772743041",
+        "doc_name": "some document name",
+        "doc_url": "http://127.0.0.1:5000/add_edit_device/1",
+        "doc_file_name": "document_upload_7f553ffb-09f0-4474-b70a-11de3b846003_1730772743041.csv"
+      }
+    ]
   },
   {
     "id": 2,
@@ -27,9 +32,7 @@
     "purchase_date": "",
     "warranty_expiration_date": "",
     "warranty_notes": "",
-    "manuals_doc_ref": [],
-    "purchase_receipt_doc_ref": [],
-    "warranty_doc_ref": []
+    "document_references": []
   },
   {
     "id": 3,
@@ -43,9 +46,7 @@
     "purchase_date": "",
     "warranty_expiration_date": "",
     "warranty_notes": "",
-    "manuals_doc_ref": [],
-    "purchase_receipt_doc_ref": [],
-    "warranty_doc_ref": []
+    "document_references": []
   },
   {
     "id": 4,
@@ -59,9 +60,7 @@
     "purchase_date": "",
     "warranty_expiration_date": "",
     "warranty_notes": "",
-    "manuals_doc_ref": [],
-    "purchase_receipt_doc_ref": [],
-    "warranty_doc_ref": []
+    "document_references": []
   },
   {
     "id": 5,
@@ -75,8 +74,6 @@
     "purchase_date": "",
     "warranty_expiration_date": "",
     "warranty_notes": "",
-    "manuals_doc_ref": [],
-    "purchase_receipt_doc_ref": [],
-    "warranty_doc_ref": []
+    "document_references": []
   }
 ]

@@ -27,9 +27,7 @@ class Device (EntityBase):
         self.warranty_notes = None
 
         #references to documents
-        self.manuals_doc_ref = [] 
-        self.purchase_receipt_doc_ref = []
-        self.warranty_doc_ref = []
+        self.document_references = [] 
 
     @property
     def warranty_expiration_date_formatted(self, empty_value='Unknown'):
@@ -91,9 +89,9 @@ class Device (EntityBase):
         self.warranty_expiration_date = dict.get("warranty_expiration_date",'')
         self.warranty_notes = dict.get("warranty_notes",'')
 
-        warranty_doc_ref = dict.get('warranty_doc_ref',[])
-        for i in warranty_doc_ref:
-            self.warranty_doc_ref.append(i)
+        document_references = dict.get('document_references',[])
+        for i in document_references:
+            self.document_references.append(i)
         
 
     def update_from_device(self, dev):
@@ -110,17 +108,17 @@ class Device (EntityBase):
         self.warranty_expiration_date = dev.warranty_expiration_date
         self.warranty_notes = dev.warranty_notes
 
-        for i in dev.warranty_doc_ref:
-            self.warranty_doc_ref.append(i)
+        for i in dev.document_references:
+            self.document_references.append(i)
 
-    def remove_warranty_doc_by_key(self,doc_key:str):
+    def remove_doc_by_key(self,doc_key:str):
         '''
         Removes the warranty info from a device given the key
         '''
-        doc_to_delete = next((e for e in self.warranty_doc_ref if e['doc_ref_id'] == doc_key), None)
+        doc_to_delete = next((e for e in self.document_references if e['doc_ref_id'] == doc_key), None)
         
         if doc_to_delete:            
-              self.warranty_doc_ref.remove(doc_to_delete)                   
+              self.document_references.remove(doc_to_delete)                   
               try:
                 os.remove(os.path.join('db','docs',doc_to_delete['doc_file_name']))
               except:
