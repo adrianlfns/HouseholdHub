@@ -1,5 +1,5 @@
 '''
-Innitial module for innitializing the flask app
+Initial module for initializing the flask app
 For flask documentation see https://flask.palletsprojects.com/en/3.0.x/
 '''
 
@@ -14,10 +14,10 @@ app = flask.Flask(__name__, static_url_path='/static')
 app.secret_key = '192b9bdd22ab9ed4d12e236c78afcb9a393ec15f71bbf5dc987d54727823bcb1'
 
 
-#Blueprints regisistration. 
+#Blueprints registration. 
 #Blueprints are simply modules where related code can be placed.
-#Bluprintss are very helpfull for organization.
-#see bluprint documentation https://flask.palletsprojects.com/en/stable/blueprints/
+#Blueprints are very helpful for organization.
+#see blueprint documentation https://flask.palletsprojects.com/en/stable/blueprints/
 app.register_blueprint(home_blueprint)
 app.register_blueprint(categories_blueprint)
 app.register_blueprint(devices_blueprint)

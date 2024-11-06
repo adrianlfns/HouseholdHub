@@ -1,54 +1,5 @@
 [
   {
-    "id": 1,
-    "device_name": "device 11122",
-    "category_id": 4,
-    "category_name": "",
-    "device_make": "",
-    "device_model": "",
-    "purchase_price_dollars": "",
-    "purchase_store": "",
-    "purchase_date": "",
-    "warranty_expiration_date": "2024-12-27",
-    "warranty_notes": "",
-    "document_references": [
-      {
-        "doc_ref_id": "7f553ffb-09f0-4474-b70a-11de3b846003_1730772743041",
-        "doc_name": "some document name",
-        "doc_url": "http://127.0.0.1:5000/add_edit_device/1",
-        "doc_file_name": "document_upload_7f553ffb-09f0-4474-b70a-11de3b846003_1730772743041.csv"
-      }
-    ]
-  },
-  {
-    "id": 2,
-    "device_name": "Device 22",
-    "category_id": 4,
-    "category_name": "",
-    "device_make": "",
-    "device_model": "",
-    "purchase_price_dollars": "",
-    "purchase_store": "",
-    "purchase_date": "",
-    "warranty_expiration_date": "",
-    "warranty_notes": "",
-    "document_references": []
-  },
-  {
-    "id": 3,
-    "device_name": "another device2",
-    "category_id": 7,
-    "category_name": "",
-    "device_make": "",
-    "device_model": "",
-    "purchase_price_dollars": "",
-    "purchase_store": "",
-    "purchase_date": "",
-    "warranty_expiration_date": "",
-    "warranty_notes": "",
-    "document_references": []
-  },
-  {
     "id": 5,
     "device_name": "Nintendo Switch",
     "category_id": 9,

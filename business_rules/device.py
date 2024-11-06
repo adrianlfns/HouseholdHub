@@ -113,16 +113,36 @@ class Device (EntityBase):
 
     def remove_doc_by_key(self,doc_key:str):
         '''
-        Removes the warranty info from a device given the key
+        Removes the documents a device given the key
         '''
         doc_to_delete = next((e for e in self.document_references if e['doc_ref_id'] == doc_key), None)
-        
+        self.remove_single_doc(doc_to_delete)
+              
+    
+    def remove_single_doc(self, doc_to_delete):
+        '''
+        Remove a single document
+        '''
         if doc_to_delete:            
               self.document_references.remove(doc_to_delete)                   
               try:
                 os.remove(os.path.join('db','docs',doc_to_delete['doc_file_name']))
               except:
-                  pass
+                  pass      
+
+              
+    def remove_all_docs(self):
+        '''
+        Clears all documents from a device given the key
+        '''
+        while len(self.document_references) > 0:
+            doc_to_delete = self.document_references[0]
+            self.remove_single_doc(doc_to_delete)
+
+
+
+
+
 
 
 

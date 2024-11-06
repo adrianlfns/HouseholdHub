@@ -172,12 +172,15 @@ class Device_Manager:
         This acts as a database delete.
         Given a device it will remove it from the 'database'
         '''
-        device_id = device.id
         devices_col = Device_Manager.get_all_devices() #obtain the devices from the database 
-        found_device = Device_Manager.get_device_by_id(device_id=device_id, devices_col=devices_col) 
+        found_device = Device_Manager.get_device_by_id(device_id=device.id, devices_col=devices_col) 
         if found_device:
+            #this part is just for cleanup
+            found_device.remove_all_docs()
             devices_col.remove(found_device)
             Device_Manager.store_device_col(devices_col)
+            
+            
 
     @staticmethod
     def get_device_by_id(device_id:int, devices_col:list = None):
