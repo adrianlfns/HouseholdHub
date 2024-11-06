@@ -1,14 +1,14 @@
 import flask
 import os
 
-from routes_bluprints.route_utils import handle_route_error, handle_route_invalid_request
+from routes_blueprints.route_utils import handle_route_error, handle_route_invalid_request
 
 from business_rules.expiration_types_lookup import ExpirationTypeLookup
 from business_rules.device_manager import Device_Manager #imports a package from the module device_manager, the class Device_Manager is used for every data access with the device.
 from business_rules.device import Device
 from business_rules.categories_manager import Categories_Manager
 
-from routes_bluprints.route_utils import handle_route_error
+from routes_blueprints.route_utils import handle_route_error
 
 
 #this creates the devices blueprint object. See app.py for registration

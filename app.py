@@ -5,9 +5,9 @@ For flask documentation see https://flask.palletsprojects.com/en/3.0.x/
 
 import flask 
  
-from routes_bluprints.home_blueprint import home_blueprint
-from routes_bluprints.categories_blueprint import categories_blueprint
-from routes_bluprints.devices_blueprint import devices_blueprint
+from routes_blueprints.home_blueprint import home_blueprint
+from routes_blueprints.categories_blueprint import categories_blueprint
+from routes_blueprints.devices_blueprint import devices_blueprint
 
 
 app = flask.Flask(__name__, static_url_path='/static')

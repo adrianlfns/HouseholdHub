@@ -1,6 +1,6 @@
 import flask
 
-from routes_bluprints.route_utils import handle_route_error
+from routes_blueprints.route_utils import handle_route_error
 
 from business_rules.categories_manager import Categories_Manager
 from business_rules.category import Category

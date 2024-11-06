@@ -1,6 +1,6 @@
 import flask
 
-from routes_bluprints import route_utils
+from routes_blueprints import route_utils
 
 from business_rules.device_manager import Device_Manager #imports a package from the module device_manager, the class Device_Manager is used for every data access with the device.
 from business_rules.device import Device
