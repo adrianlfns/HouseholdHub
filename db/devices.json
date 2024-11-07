@@ -11,6 +11,13 @@
     "purchase_date": "",
     "warranty_expiration_date": "",
     "warranty_notes": "",
-    "document_references": []
+    "document_references": [
+      {
+        "doc_ref_id": "0ba6bb24-ca60-4285-9409-2de2ce778292_1731020572977",
+        "doc_name": "document name",
+        "doc_url": "http://127.0.0.1:5000/add_edit_device/5",
+        "doc_file_name": "document_upload_0ba6bb24-ca60-4285-9409-2de2ce778292_1731020572977"
+      }
+    ]
   }
 ]

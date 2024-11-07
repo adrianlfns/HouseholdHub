@@ -84,15 +84,18 @@
                     Documents (Warranty, Receipts, Manuals)
                 </div>
                 <div class="card-body">
-                    <ul id="document_list" class="list-group">
+                    <ul id="document_list" class="list-group gap-3">
                       {% for document in data.document_references %} 
                       <li class="list-group-item">
                         <div class="d-flex">
                             <div class="flex-grow-1">
                                 {{document['doc_name']}}
                             </div>
-                            <button type="button" onclick="delete_doc(this,'{{document['doc_ref_id']}}')" class="btn btn-sm btn-secondary" title="Delete" ><i class="bi bi-trash"></i></button>
-                        </div>                        
+                            {% if document['doc_url'] != ''  %}
+                             <a href="{{document['doc_url']}}"  target="_blank" class="btn btn-sm btn-secondary m-1" title="Open Link"><i class="bi bi-browser-edge"></i></a>
+                            {% endif %}
+                            <button type="button" onclick="delete_doc(this,'{{document['doc_ref_id']}}')" class="btn btn-sm btn-secondary m-1" title="Delete" ><i class="bi bi-trash"></i></button>
+                         </div>                        
                       </li>
                       {% endfor %} 
                     </ul>
