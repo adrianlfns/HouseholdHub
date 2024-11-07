@@ -1,10 +1,12 @@
 import flask
+import sys
 
 def handle_route_error():
     '''
     Function that handles exceptions. Renders the error page. Logs the error. etc.
     '''
-    return flask.render_template('error_page.html')
+    ex_info = sys.exc_info() 
+    return flask.render_template('error_page.html',message=ex_info[1])
 
 def handle_route_invalid_request():
     """

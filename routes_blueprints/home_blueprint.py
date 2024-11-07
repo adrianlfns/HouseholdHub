@@ -20,7 +20,7 @@ def home():
     '''
     Initial route to land on the home page.
     This page contains a couple of dashboards
-    '''    
+    '''        
     try:
         #Dashboard section 1 - device count by categories
         device_count_by_cat_col = Device_Manager.get_device_count_by_categories()

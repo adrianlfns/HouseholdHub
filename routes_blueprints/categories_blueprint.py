@@ -39,7 +39,7 @@ def add_edit_category_get(category_id:int=None):
                 raise ValueError(f"Invalid post data. Expected parameter category_id to be int")
             
             if category_id < 0:
-                raise ValueError(f"Invalid post data. Expected parameter category_id to be zero or greather than zero.")
+                raise ValueError(f"Invalid post data. Expected parameter category_id to be zero or greater than zero.")
             
             if category_id > 0:
                 category = Categories_Manager.get_category_by_id(category_id)
