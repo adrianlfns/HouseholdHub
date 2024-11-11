@@ -1,22 +1,22 @@
 [
   {
-    "id": 5,
-    "device_name": "Nintendo Switch",
+    "id": 1,
+    "device_name": "dev name",
     "category_id": 9,
     "category_name": "",
-    "device_make": "Nintendo",
+    "device_make": "",
     "device_model": "",
     "purchase_price_dollars": "",
-    "purchase_store": "Walmart",
+    "purchase_store": "",
     "purchase_date": "",
     "warranty_expiration_date": "",
     "warranty_notes": "",
     "document_references": [
       {
-        "doc_ref_id": "0ba6bb24-ca60-4285-9409-2de2ce778292_1731020572977",
-        "doc_name": "document name",
-        "doc_url": "http://127.0.0.1:5000/add_edit_device/5",
-        "doc_file_name": "document_upload_0ba6bb24-ca60-4285-9409-2de2ce778292_1731020572977"
+        "doc_ref_id": "e5933817-fa4e-475a-ada2-225e06122cee_1731292311429",
+        "doc_name": "fff",
+        "doc_url": "",
+        "doc_file_name": "document_upload_e5933817-fa4e-475a-ada2-225e06122cee_1731292311429.jpg"
       }
     ]
   }

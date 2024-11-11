@@ -91,6 +91,9 @@
                             <div class="flex-grow-1">
                                 {{document['doc_name']}}
                             </div>
+                            {% if document['doc_file_name'] != ''  %}
+                             <a class="btn btn-sm btn-secondary m-1"   href="\device_document_download?device_id={{data['id']}}&doc_ref_id={{document['doc_ref_id']}}" target="_blank" title="Download"><i class="bi bi-cloud-arrow-down"></i></a>
+                            {% endif %}
                             {% if document['doc_url'] != ''  %}
                              <a href="{{document['doc_url']}}"  target="_blank" class="btn btn-sm btn-secondary m-1" title="Open Link"><i class="bi bi-browser-edge"></i></a>
                             {% endif %}
@@ -242,7 +245,7 @@
 
         id = get_new_id();
 
-        document.getElementById("modal_tile").innerText = "Add Warranty Document";
+        document.getElementById("modal_tile").innerText = "Add Document";
         
         const modal_body_content = document.getElementById("modal_body_content");
         modal_body_content.innerHTML = '';

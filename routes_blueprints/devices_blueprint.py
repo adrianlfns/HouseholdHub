@@ -222,9 +222,6 @@ def process_post_data_dictionary(post_data_collected:dict):
             del post_data_collected[doc_url_dict_key]
         
 
-
-
-
 @devices_blueprint.post("/add_edit_device")
 def add_edit_device_post():
     '''
@@ -264,3 +261,33 @@ def add_edit_device_post():
         return handle_route_error()
  
 
+@devices_blueprint.get("/device_document_download")
+def device_document_download():
+    '''
+    Downloads a device document
+    '''
+    try:
+        device_id = flask.request.args.get("device_id",0)
+        try:
+            device_id = int(device_id)
+        except ValueError:
+            raise ValueError(f"Invalid get data. Expected parameter device_id to be int.")
+        
+        if device_id<=0:
+            raise ValueError(f"Invalid get data. Expected parameter device_id to be greater than zero.")
+        
+        doc_ref_id = flask.request.args.get("doc_ref_id",'')
+        if doc_ref_id.strip() == '':
+            raise ValueError(f"Invalid get data. Expected parameter doc_ref_id to be not empty.")
+        
+        device:Device = Device_Manager.get_device_by_id(device_id=device_id)
+        if not device:
+            raise ValueError(f"Unable to find device with ID {device_id}")
+        
+        doc_ref = device.find_doc_ref_by_key(doc_ref_id)
+        if not doc_ref:
+            raise ValueError(f"Unable to find document reference with id {doc_ref_id} in device with id {device_id}")
+        
+        return flask.send_file(path_or_file= os.path.join('db','docs',doc_ref['doc_file_name']) , as_attachment=True) 
+    except:
+        handle_route_error()
