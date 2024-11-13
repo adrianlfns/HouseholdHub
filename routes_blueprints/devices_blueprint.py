@@ -265,7 +265,8 @@ def add_edit_device_post():
 @devices_blueprint.get("/device_document_download")
 def device_document_download():
     '''
-    Downloads a device document
+    Downloads a device document.
+    Expcted get parameters: device_id:int and doc_ref_id:str
     '''
     try:
         device_id = flask.request.args.get("device_id",0)

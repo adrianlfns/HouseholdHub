@@ -112,17 +112,17 @@ class Device (EntityBase):
         for i in dev.document_references:
             self.document_references.append(i)
 
-    def find_doc_ref_by_key(self, doc_key:str):
+    def find_doc_ref_by_key(self, doc_ref_id:str):
         '''
         Finds a document reference by it's key
         '''
-        return next((e for e in self.document_references if e['doc_ref_id'] == doc_key), None)
+        return next((e for e in self.document_references if e['doc_ref_id'] == doc_ref_id), None)
 
-    def remove_doc_by_key(self,doc_key:str):
+    def remove_doc_by_key(self,doc_ref_id:str):
         '''
         Removes the documents a device given the key
         '''
-        doc_to_delete = self.find_doc_ref_by_key(doc_key=doc_key)
+        doc_to_delete = self.find_doc_ref_by_key(doc_ref_id=doc_ref_id)
         self.remove_single_doc(doc_to_delete)
               
     
