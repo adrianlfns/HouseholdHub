@@ -1,22 +1,43 @@
 [
   {
     "id": 1,
-    "device_name": "dev name",
+    "device_name": "Nintendo Switch",
     "category_id": 9,
     "category_name": "",
-    "device_make": "",
+    "device_make": "Nintendo",
     "device_model": "",
-    "purchase_price_dollars": "",
+    "purchase_price_dollars": "300",
+    "purchase_store": "Walmart",
+    "purchase_date": "2001-01-01",
+    "warranty_expiration_date": "",
+    "warranty_notes": "",
+    "document_references": [
+      {
+        "doc_ref_id": "9cdd899e-3811-45f7-ab14-69fcbb917b01_1731532486739",
+        "doc_name": "Invoice Document",
+        "doc_url": "",
+        "doc_file_name": "document_upload_9cdd899e-3811-45f7-ab14-69fcbb917b01_1731532486739.pdf"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "device_name": "Beelink Minicomputer",
+    "category_id": 1,
+    "category_name": "",
+    "device_make": "Beelink",
+    "device_model": "",
+    "purchase_price_dollars": "600",
     "purchase_store": "",
     "purchase_date": "",
     "warranty_expiration_date": "",
     "warranty_notes": "",
     "document_references": [
       {
-        "doc_ref_id": "e5933817-fa4e-475a-ada2-225e06122cee_1731292311429",
-        "doc_name": "fff",
+        "doc_ref_id": "16976c2a-bae4-4b45-8f28-f87d34d9d052_1731533399668",
+        "doc_name": "invoice sample",
         "doc_url": "",
-        "doc_file_name": "document_upload_e5933817-fa4e-475a-ada2-225e06122cee_1731292311429.jpg"
+        "doc_file_name": "document_upload_16976c2a-bae4-4b45-8f28-f87d34d9d052_1731533399668.pdf"
       }
     ]
   }
