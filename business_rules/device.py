@@ -39,7 +39,7 @@ class Device (EntityBase):
         if not self.warranty_expiration_date or self.warranty_expiration_date =='':
             return empty_value       
  
-        date = self.warranty_expiration_date_to_datetime # datetime.strptime(self.warranty_expiration_date,'%Y-%m-%d')      
+        date = self.warranty_expiration_date_to_datetime     
         
         return date.strftime("%A %B %d %Y")
     
@@ -74,6 +74,7 @@ class Device (EntityBase):
         if self.category_id == '':
             self.category_id = 0
         
+        #small validation to make sure that the category_id is integer
         if not isinstance(self.category_id, int):
             try:
                 self.category_id = int(self.category_id)
