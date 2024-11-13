@@ -185,24 +185,25 @@ def process_post_data_dictionary(post_data_collected:dict):
 
         #validate that the file comes in the post
         file_name_key = 'document_upload_' + key
-        if file_name_key not in flask.request.files:
-            raise Exception(f"File content expected to appear in the request. Expected content for file {file_name_key}")  
-        file = flask.request.files[file_name_key]
-
-        #obtain the file extension
-        file_split = os.path.splitext(file.filename)
-        file_ext = file_split[1]
-        if not file_ext:
-            file_ext = ''
+        if file_name_key in flask.request.files:
+            file = flask.request.files[file_name_key]
+            
+            #obtain the file extension       
+            file_split = os.path.splitext(file.filename)
+            file_ext = file_split[1]
+            if not file_ext:
+                file_ext = ''
+            
+            #create the docs storage directory if needed
+            doc_dir = os.path.join('db','docs')        
+            if not os.path.isdir(doc_dir):
+                os.mkdir(doc_dir)
         
-        #create the docs storage directory if needed
-        doc_dir = os.path.join('db','docs')        
-        if not os.path.isdir(doc_dir):
-            os.mkdir(doc_dir)
-    
-        #store the file in db/docs/
-        file_name_key = file_name_key + file_ext
-        file.save(os.path.join(doc_dir,file_name_key))
+            #store the file in db/docs/
+            file_name_key = file_name_key + file_ext
+            file.save(os.path.join(doc_dir,file_name_key))
+        else:
+            file_name_key = ''
 
         #prepare the dictionary 
         doc_list = post_data_collected.get('document_references',[])

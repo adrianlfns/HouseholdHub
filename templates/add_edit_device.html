@@ -84,26 +84,30 @@
                     Documents (Warranty, Receipts, Manuals)
                 </div>
                 <div class="card-body">
-                    <ul id="document_list" class="list-group gap-3">
+                    <div id="document_list" class="row">
                       {% for document in data.document_references %} 
-                      <li class="list-group-item">
-                        <div class="d-flex">
-                            <div class="flex-grow-1">
-                                {{document['doc_name']}}
-                            </div>
-                            {% if document['doc_file_name'] != ''  %}
-                             <a class="btn btn-sm btn-secondary m-1"   href="\device_document_download?device_id={{data['id']}}&doc_ref_id={{document['doc_ref_id']}}" target="_blank" title="Download"><i class="bi bi-cloud-arrow-down"></i></a>
-                            {% endif %}
-                            {% if document['doc_url'] != ''  %}
-                             <a href="{{document['doc_url']}}"  target="_blank" class="btn btn-sm btn-secondary m-1" title="Open Link"><i class="bi bi-browser-edge"></i></a>
-                            {% endif %}
-                            <button type="button" onclick="delete_doc(this,'{{document['doc_ref_id']}}')" class="btn btn-sm btn-secondary m-1" title="Delete" ><i class="bi bi-trash"></i></button>
-                         </div>                        
-                      </li>
+                      <div class="col-sm-6 col-lg-3 mb-1 document_item">                      
+                        <div class="card">
+                            <div class="card-body" style="padding: 4px;">
+                                <div class="d-flex">
+                                    <div class="flex-grow-1">
+                                        {{document['doc_name']}}
+                                    </div>
+                                    {% if document['doc_file_name'] != ''  %}
+                                    <a class="btn btn-sm btn-secondary m-1"   href="\device_document_download?device_id={{data['id']}}&doc_ref_id={{document['doc_ref_id']}}" target="_blank" title="Download"><i class="bi bi-cloud-arrow-down"></i></a>
+                                    {% endif %}
+                                    {% if document['doc_url'] != ''  %}
+                                    <a href="{{document['doc_url']}}"  target="_blank" class="btn btn-sm btn-secondary m-1" title="Open Link"><i class="bi bi-browser-edge"></i></a>
+                                    {% endif %}
+                                    <button type="button" onclick="delete_doc(this,'{{document['doc_ref_id']}}')" class="btn btn-sm btn-secondary m-1" title="Delete" ><i class="bi bi-trash"></i></button>
+                                </div> 
+                            </div>                                    
+                        </div>
+                      </div>
                       {% endfor %} 
-                    </ul>
-                    <div class="d-flex flex-row-reverse mt-2">
-                        <button type="button" id="add_waranty_doc" onclick="add_doc()" class="btn btn-primary btn-sm right"><i class="bi bi-plus-circle"></i> Add Document</button>
+                    </div>
+                    <div class="mt-2">
+                       <button type="button" id="add_waranty_doc" onclick="add_doc()" class="btn btn-sm btn-block btn-primary"><i class="bi bi-plus-circle"></i> Add Document</button>
                     </div>                    
                 </div>
             </div>
@@ -222,7 +226,7 @@
         if (!confirm('Are you sure you want to delete the document?')) return;
         let currentElement = element.parentElement;
         while(currentElement){
-            if(currentElement.classList.contains('list-group-item')){
+            if(currentElement.classList.contains('document_item')){
                 currentElement.remove();
                 currentElement = null;
             }
@@ -268,22 +272,60 @@
 
         const document_list = document.getElementById("document_list");
 
-        const oLiElement = document.createElement("li")
-        oLiElement.setAttribute("class", "list-group-item");        
+        const oDocumentItem = document.createElement("div");
+        oDocumentItem.setAttribute("class", "col-sm-6 col-lg-3 mb-1 document_item");  
+        
+        const oCardItem = document.createElement("div");
+        oCardItem.setAttribute("class", "card");
+        oDocumentItem.append(oCardItem)
 
-        const oFlexElement = document.createElement("div")
+        const oCardBody = document.createElement("div");
+        oCardBody.setAttribute("class","card-body");
+        oCardBody.setAttribute("style","padding: 4px;");
+        oCardItem.append(oCardBody)
+
+        const oFlexElement = document.createElement("div");
         oFlexElement.setAttribute("class", "d-flex");
-        oLiElement.append(oFlexElement);
+        oCardBody.append(oFlexElement);
 
         const oNameElement = document.createElement("div");
         oNameElement.setAttribute("class", "flex-grow-1");
         oNameElement.innerText = document_name.value;
         oFlexElement.append(oNameElement);
 
+        if (document_url.value != '')
+        {
+            const oURLLink = document.createElement("a");
+            oURLLink.setAttribute("class", "btn btn-sm btn-secondary m-1");
+            oURLLink.setAttribute("href",document_url.value);
+            oURLLink.setAttribute("target","_blank");
+            oURLLink.setAttribute("title","Open Link");
+            oFlexElement.append(oURLLink);
+
+            const oLinkDecor = document.createElement("i");
+            oLinkDecor.setAttribute("class",'bi bi-browser-edge');
+            oURLLink.append(oLinkDecor);
+        }
+
+        if (document_upload.value != '')
+        {
+            const oDownloadButton = document.createElement("button");
+            oDownloadButton.setAttribute("type","button");
+            oDownloadButton.setAttribute("class","btn btn-sm btn-secondary m-1");
+            oDownloadButton.setAttribute("title","Download");
+            oDownloadButton.setAttribute("onclick","localDownload('" + document_upload.id + "')")
+            oFlexElement.append(oDownloadButton);
+
+            const oDownloadDecor = document.createElement("i");
+            oDownloadDecor.setAttribute("class",'bi bi-cloud-arrow-down');
+            oDownloadButton.append(oDownloadDecor);
+        }
+
         const oDeleteElement = document.createElement("button");
         oDeleteElement.setAttribute("type",'button');
         oDeleteElement.setAttribute("onclick", "delete_doc(this,'')");
-        oDeleteElement.setAttribute("class",'btn btn-sm btn-secondary');
+        oDeleteElement.setAttribute("class",'btn btn-sm btn-secondary m-1');
+        oDeleteElement.setAttribute("title", "Delete");
         oFlexElement.append(oDeleteElement);
 
         const oDeleteDecor = document.createElement("i");
@@ -291,13 +333,17 @@
         oDeleteElement.append(oDeleteDecor);
 
 
-        document_list.appendChild(oLiElement);
-        oLiElement.appendChild(document_name);
-        oLiElement.appendChild(document_url);
-        oLiElement.appendChild(document_upload);
+        document_list.appendChild(oDocumentItem);
+        oDocumentItem.appendChild(document_name);
+        oDocumentItem.appendChild(document_url);
+        oDocumentItem.appendChild(document_upload);
         document_name.hidden = true;
         document_url.hidden = true;
         document_upload.hidden = true;
+        if(document_upload.value == '')
+        {
+            document_upload.remove();
+        }
         $('#upload_documents').modal('hide');
 
     }
@@ -338,6 +384,12 @@
         }
 
         return true;
+    }
+
+    function localDownload(id)
+    {
+        file = document.getElementById(id).files[0];
+        window.open(window.URL.createObjectURL(file),'Download')
     }
   
 
