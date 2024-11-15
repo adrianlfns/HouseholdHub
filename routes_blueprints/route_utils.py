@@ -1,6 +1,5 @@
 import flask
 import sys
-import traceback
 
 def handle_route_error():
     '''
