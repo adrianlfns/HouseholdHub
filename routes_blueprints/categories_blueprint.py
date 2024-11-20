@@ -71,7 +71,7 @@ def add_edit_category_post():
         #add or edit the dictionary in the storage
         category, category_added = Categories_Manager.add_edit_category(category)
 
-        #set a flash message for another request. In this case /my_devices will consume the flashed messages.
+        #set a flash message. In this case /my_devices will consume the flashed messages.
         if category_added:
             flask.flash(f'The new category was successfully added. The new category name is "{category.category_name}".')
         else:
